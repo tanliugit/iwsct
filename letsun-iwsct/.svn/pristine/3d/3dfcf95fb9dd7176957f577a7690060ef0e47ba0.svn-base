@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="add">
+		<div class="layui-form-item">
+			<label class="layui-form-label">corpid</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">1:正常，2：其他，0:删除</label>
+			<div class="layui-input-block">
+				<input type="text" name="status" class="layui-input"  placeholder="请输入1:正常，2：其他，0:删除"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">抽奖次数，默认只能抽一次</label>
+			<div class="layui-input-block">
+				<input type="text" name="total" class="layui-input"  placeholder="请输入抽奖次数，默认只能抽一次"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">手机号</label>
+			<div class="layui-input-block">
+				<input type="text" name="mobile" class="layui-input"  placeholder="请输入手机号"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">查看中奖密码</label>
+			<div class="layui-input-block">
+				<input type="text" name="password" class="layui-input"  placeholder="请输入查看中奖密码"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">提交的收奖地址</label>
+			<div class="layui-input-block">
+				<input type="text" name="address" class="layui-input"  placeholder="请输入提交的收奖地址"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">name</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">sex</label>
+			<div class="layui-input-block">
+				<input type="text" name="sex" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">birthday</label>
+			<div class="layui-input-block">
+				<input type="text" name="birthday" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">memberid</label>
+			<div class="layui-input-block">
+				<input type="text" name="memberid" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">wxno</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxno" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">nick</label>
+			<div class="layui-input-block">
+				<input type="text" name="nick" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">photo</label>
+			<div class="layui-input-block">
+				<input type="text" name="photo" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">remark</label>
+			<div class="layui-input-block">
+				<input type="text" name="remark" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱</label>
+			<div class="layui-input-block">
+				<input type="text" name="email" class="layui-input"  placeholder="请输入邮箱"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

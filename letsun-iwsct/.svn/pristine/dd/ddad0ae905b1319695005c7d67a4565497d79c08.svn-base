@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<div class="layui-form-item">
+			<label class="layui-form-label">错误代码</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.errorCode}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">请求URL</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.requestUrl}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">请求参数</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.params}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">错误信息</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.message}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">异常信息</label>
+			<div class="layui-input-block">
+				 <textarea rows="7" th:text="${obj.exception}" class="layui-textarea" disabled="disabled"></textarea>
+			</div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

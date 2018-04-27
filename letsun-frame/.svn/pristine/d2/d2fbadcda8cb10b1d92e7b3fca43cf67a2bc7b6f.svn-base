@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>代码生成器配置文件</comment>
+	<!-- 要生产代码的表明，多个表用逗号分隔 -->
+	<entry key="generatorTables">sys_error_log,sys_operation_log</entry>
+	<!-- 模板名称，标记的用templateBiaoji，KA的用templateErp-->
+	<entry key="templateRootDir">templateBiaoji</entry>
+	<!-- 模板文件输出目录 -->
+	<entry key="outRoot">E:\temp\template</entry>
+	
+	<!-- 基础包路径 -->
+    <entry key="basepackage">com.letsun.test</entry>
+    <!-- 项目名称，如标记项目：biaoji -->
+    <entry key="projectName">test</entry>
+    <!-- 模块名称，如:centre,system -->
+    <entry key="moduleName">system</entry>
+	<!-- 视图模板路径 -->
+	<entry key="namespace">templates</entry>
+	
+	<!-- 数据库链接信息 -->
+	<entry key="jdbc_driver">com.mysql.jdbc.Driver</entry>
+	<entry key="jdbc_url">jdbc:mysql://192.168.1.8:3306/letsun-demo?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+	<entry key="jdbc_username">biaoji</entry>
+	<entry key="jdbc_password">123456</entry>
+	<!-- oracle需要指定jdbc.schema -->
+	<entry key="jdbc_schema">letsun-biaoji</entry>
+	<entry key="jdbc_catalog"></entry>	
+	<!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: T_, V_, SYS_ -->
+	<entry key="tableRemovePrefixes">letsun_,sys_</entry>
+	<!-- 数据库类型至java类型映射  -->
+	<entry key="java_typemapping.java.sql.Timestamp">Date</entry>
+	<entry key="java_typemapping.java.sql.Date">Date</entry>
+	<entry key="java_typemapping.java.sql.Time">Date</entry>
+	<entry key="java_typemapping.java.sql.Clob">String</entry>
+	<entry key="java_typemapping.java.math.BigDecimal">Double</entry>
+	<entry key="java_typemapping.java.lang.Boolean">Integer</entry>
+	<entry key="java_typemapping.java.lang.Byte">Integer</entry>
+	<entry key="java_typemapping.java.lang.Short">Integer</entry>
+	<entry key="java_typemapping.java.lang.Integer">Integer</entry>
+	<entry key="java_typemapping.java.lang.Long">Long</entry>
+	<entry key="java_typemapping.java.lang.Float">BigDecimal</entry>
+	<entry key="java_typemapping.java.lang.Double">Double</entry>
+	<entry key="java_typemapping.java.lang.String">String</entry>
+</properties>

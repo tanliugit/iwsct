@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--公共头部-->
+<th:block th:include="/common/layout/header" />
+<!--公共头部结束-->
+<title>页面标题</title>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin lxcy-layout-admin">
+   	 <!--头部导航菜单 start-->
+	<th:block th:include="/common/layout/topNav" />
+   	<!--头部导航菜单 end-->
+
+    <div class="layui-fluid lxcy-fluid">
+         <!-- 左侧导航菜单 start -->
+		<th:block th:include="/common/layout/leftNav" />
+		 <!-- 左侧导航菜单 end -->
+
+        <!-- 内容主体区域 start -->
+        <div class="layui-body lxcy-body" id="js-lxcyBody">
+            <!-- 面包屑导航 start -->
+            <div class="bread-nav">
+                <i class="layui-icon lxcy-icon">&#xe68e;</i>
+                                       当前位置：<span class="layui-breadcrumb" lay-separator=">"><a>系统管理</a><a>通用配置</a><a>操作日志管理</a>
+				</span>
+            </div>
+            <!-- 面包屑导航 end -->
+
+            <div class="lxcy-container">
+                <i class="lxcy-toggle" id="js-showLeftNav"></i>
+                <!-- 自定义内容区域 start -->
+                <div class="record-center-container">
+                    <!-- 表单 start -->
+                   <form  class="layui-form layui-form-pane">
+					  <div class="layui-form-item">
+						  <div class="layui-inline">
+						    <label class="layui-form-label">业务类型</label>
+						   	<div class="layui-input-inline" style="width: 178px;">
+						       <select name="businessType">
+						        <option value="">请选择</option>
+						        <option value="0">其它</option>
+						        <option value="1">新增</option>
+						        <option value="2">修改</option>
+						        <option value="3">删除</option>
+						        <option value="4">授权</option>
+						        <option value="5">导出</option>
+						        <option value="6">导入</option>
+						        <option value="7">登录</option>
+						        <option value="8">退出登录</option>
+						        <option value="9">禁止访问</option>
+						       </select>
+						    </div>
+						  </div>
+						   <div class="layui-inline">
+						    <label class="layui-form-label">业务状态</label>
+						   	<div class="layui-input-inline" style="width: 178px;">
+						       <select name="businessStatus">
+						        <option value="">请选择</option>
+						        <option value="1">成功</option>
+						        <option value="2">失败</option>
+						       </select>
+						    </div>
+						  </div>
+						   <div class="layui-inline">
+						    <label class="layui-form-label">操作人</label>
+						    <div class="layui-input-inline" style="width: 178px;">
+						      <input type="text" name="creator"  class="layui-input"/>
+						    </div>
+						  </div>
+						   <div class="layui-inline">
+						    <label class="layui-form-label">操作IP</label>
+						    <div class="layui-input-inline" style="width: 178px;">
+						      <input type="text" name="requestIp"  class="layui-input"/>
+						    </div>
+						  </div>
+						  <button onclick="return $.table.search();"  class="layui-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+					  </div>
+					</form>
+                    <!-- 表单 end -->
+
+                    <!-- 表格 start -->
+                   <table class="layui-table" lay-data="{url:'/system/operationLog/list',page:true, id:'layui-table'}" lay-filter="layui-table-filter">
+					  <thead>
+					    <tr>
+					      <th lay-data="{field:'index', width:70,templet:'#indexTpl'}">序号</th>
+					      <th lay-data="{field:'requestIp'}">操作人IP</th>
+					      <th lay-data="{field:'requestUrl'}">请求URL</th>
+					      <th lay-data="{field:'classPath'}">类路径</th>
+					      <th lay-data="{field:'methodName'}">方法名称</th>
+					      <th lay-data="{field:'businessName'}">业务名称</th>
+					      <th lay-data="{field:'businessStatus',templet:'#statusTpl'}">业务状态</th>
+					      <th lay-data="{field:'creator'}">操作人</th>
+					      <th lay-data="{field:'createDateTimeStr'}">操作时间</th>
+					      <th lay-data="{fixed: 'right', width:175, align:'center', toolbar: '#operationBar'}">操作</th>
+					    </tr>
+					  </thead>
+					</table>
+					<script type="text/html" id="indexTpl">
+                         {{d.LAY_TABLE_INDEX+1}}
+                    </script>
+					<script type="text/html" id="operationBar">
+  						<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+					</script>
+					<script type="text/html" id="statusTpl">
+				 		{{#  if(d.businessStatus == 1 ){ }}
+    						成功
+						{{# } else if(d.businessStatus == 2 ){ }}
+    						失败
+  						{{#  } else { }}
+    						其他
+  				 		{{#  } }}
+						</script>
+                    <!-- 表格 end -->
+                </div>
+                <!-- 自定义内容区域 end -->
+            </div>
+        </div>
+        <!-- 内容主体区域 end -->
+    </div>
+        <!-- 底部固定区域 start -->
+		<th:block th:include="/common/layout/footer" />
+		<!-- 底部固定区域 end -->
+</div>
+<!-- 共用JS start -->
+<th:block th:include="/common/layout/footJs" />
+<!-- 共用JS end -->
+</body>
+</html>

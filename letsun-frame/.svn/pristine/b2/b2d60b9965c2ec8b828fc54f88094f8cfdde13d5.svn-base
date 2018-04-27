@@ -1,0 +1,30 @@
+package com.letsun.frame.core.service;
+
+import java.util.Map;
+
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.IService;
+
+
+public interface BaseIService<T> extends IService<T>{
+
+	/**
+	 *  翻页查询
+	 */
+    Page<T> selectPage(T entity, Integer pageIndex, Integer pageSize);
+    
+    /**
+	 *  翻页查询
+	 */
+    Page<T> selectPage(T entity,Integer pageSize);
+    
+    /**
+     * 多表关联查询
+     * @param pageIndex
+     * @param pageSize
+     * @param entity
+     * @return
+     */
+    Page<T> selectComplex(Map<String,Object> map,int pageIndex,int pageSize);
+
+}

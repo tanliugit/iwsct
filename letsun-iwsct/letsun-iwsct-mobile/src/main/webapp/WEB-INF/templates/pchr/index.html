@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="ch" manifest="">
+<head>
+	<title>微信登录授权</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+	<link href="/static/styles/commmon/apply.css" rel="stylesheet" type="text/css">
+	
+	<script type="text/javascript" src="/static/scripts/wsct/jquery-1.9.1.min.js"></script>
+	
+
+	<th:block th:include="/getWxJsApSign" />
+	<script type="text/javascript"  th:inline="javascript">
+		wxJs.setPrefix([[${SYSURL}]]);
+		var corpid = [[${corpid}]];
+	    var openid = [[${wxno}]];
+		var nickname;
+		var headimgurl;
+		
+		var isWxBrowser = wxJs.isWeixin();
+		//微信浏览器登陆 先 获取wxno  设置客户
+		if(isWxBrowser){
+			if(!openid){
+				//获取openid  昵称 和图像
+				getOpenidForCorpid(corpid,function(data){
+					openid=data.openid;
+					nickname=data.nickname;
+					headimgurl=data.headimgurl;
+					
+					if(openid == null || openid == undefined){
+						alert("获取用户信息失败");
+						return;
+					}else{
+						var goshareUrl=[[${SYSURL}]]+"/pc/HRExtend/vote/"+[[${corpid}]]+"/"+[[${sessionid}]]+"?wxno="+openid;
+						goshareUrl+='&nickname='+encodeURI(encodeURI(nickname));
+						goshareUrl+='&headimgurl='+headimgurl;
+						window.location.replace(goshareUrl);
+						//window.location.href=goshareUrl;
+					}
+				});
+				
+			}else{
+				//不存在您的信息，请关注商家微信号
+				if([[${isNofan}]]=='0'){
+				  //_gowxUrl();
+				}
+				
+				/* if(typeof(WeixinJSBridge)=="undefined"){
+					setTimeout(function(){
+						
+						WeixinJSBridge.invoke('closeWindow');
+						
+					},1000);
+		   		}else{
+		   			WeixinJSBridge.invoke('closeWindow');
+		   		} */
+				
+			}
+		}else{
+			 _gowxUrl();
+		}
+		
+		var phoneWidth = parseInt(window.screen.width);
+		var phoneScale = phoneWidth/640;
+		var ua = navigator.userAgent;
+		if (/Android (\d+\.\d+)/.test(ua)){
+			var version = parseFloat(RegExp.$1);
+			// andriod 2.3
+			if(version>2.3){
+				document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+			// andriod 2.3以上
+			}else{
+				document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+			}
+			// 其他系统
+		} else {
+			document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+		}
+
+	</script>
+	<!--移动端版本兼容 end -->
+</head>
+
+<body  class="body"  style="min-height: 960px;">
+		<div id="container" th:if="${wxno !=null}">
+    	<h1 class="h3 text_blue">登录成功</h1>
+    	<a href="javascript:void (0)" class="confirm btn_blue"  onclick="CloseWin()">点击返回微信</a>
+    	</div>
+		<!--showtip start -->
+		<th:block th:include="show_tip" />
+		<!--/.showtip  -->
+	<style>
+	.h3 {
+	   width: 100%;
+    height: 40px;
+    font-size: 48px;
+    font-weight: bold;
+    margin: 50% auto 20% auto;
+    text-align: center;
+    font-weight:normal;
+	}
+	
+	.btn_blue {
+	     display: block;
+    width: 80%;
+    height: 65px !important;
+    line-height: 65px !important;
+    border-radius: 65px;
+    text-align: center;
+    color: #fff;
+    margin: 0 auto 50px auto;
+    font-size: 30px !important;
+    /* padding: 0 !important; */
+    background-color: #2269d4;
+	}
+	</style>
+	
+	<script src="/static/scripts/wsct/jquery.form.js" type="text/javascript" charset="utf-8"></script>	
+	<script type="text/javascript">
+		wxJs.setPrefix('${SYSURL}');
+		var corpid = '${corpid}';
+		
+	  	var reurl=window.location.href.split('#')[0];
+		var isWxBrowser = wxJs.isWeixin();
+		//微信浏览器登陆 先 获取wxno  设置客户
+		if(isWxBrowser){
+			//异步获取微信jS-SDK 参数
+			wx_Share(reurl,null);
+		}else{
+			_gowxUrl();
+		}
+
+		//前端入口  1:URL，2:（其他）访问流量 以及点击统计
+		//$.get("${root}/w/wxutil/writePvuv/${corpid}",{type:1,orgid:null,url:'${SYSURL}/w/jdwy/${corpid}'},function(data){},"json");
+		
+
+		function setSubmit(enabled) { 
+	        $('#bt_Record').disabled=!enabled;// attr('disabled', !enabled);
+	    }
+		function CloseWin(){
+			if(typeof(WeixinJSBridge)=="undefined"){
+				setTimeout(function(){
+					
+					WeixinJSBridge.invoke('closeWindow');
+					
+				},1000);
+	   		}else{
+	   			WeixinJSBridge.invoke('closeWindow');
+	   		}
+		}
+		
+	</script>
+	
+	</body>
+</html>

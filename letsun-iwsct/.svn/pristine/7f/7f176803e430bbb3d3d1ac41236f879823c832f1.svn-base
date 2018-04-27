@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<div class="layui-form-item">
+			<label class="layui-form-label">ID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.corpid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.name}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.type}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">enckey</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.enckey}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">token</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.token}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">viewno</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.viewno}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">开始时间</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.startdate}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">结束时间</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.enddate}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">设置时间</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.settledate}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">联系人</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.linkman}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">手机</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.phone}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.email}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">联系方式</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.contact}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">地址</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.address}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.status}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.remark}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">storeCorpId</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.storecorpid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">storeCorpKey</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.storecorpkey}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CREATEORG</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.createorg}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CREATECORP</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.createcorp}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXICON</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxicon}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXNAME</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxname}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXAPPID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxappid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXAPPSECRET</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxappsecret}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信请求获取access_token</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxaccesstoken}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信请求获取jsapi_ticket</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxjsapiticket}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">access_token对应的时间戳</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxtokenstamp}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">jsapi_ticket对应的时间戳</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxticketstamp}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

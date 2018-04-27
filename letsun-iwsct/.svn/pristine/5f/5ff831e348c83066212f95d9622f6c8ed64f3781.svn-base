@@ -1,0 +1,35 @@
+
+<script type="text/javascript"  src="/static/scripts/wxjs/jquery-2.2.0.min.js"></script>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="/static/scripts/wxjs/myweixin-1.0.js?--"></script>
+
+<script type="text/javascript" th:inline="javascript" >
+/*<![CDATA[*/
+		var corpid = [[${tcorp.corpid}]];
+		//跳转关注页面
+		function _gowxUrl(){
+			var wxUrl="${tcorp.contact}";
+			if(wxUrl.length>0){
+				window.location.href = wxUrl;
+			}
+		}
+
+		//跳转错误页面
+		function _goerrUrl(msg){
+			/* var errUrl="${root}/pages/urlerror.jsp?msg="+msg;
+			if(errUrl.length>0){
+				window.location.replace(errUrl);
+			} */
+		}
+
+		//验证邮箱
+		function CheckMail(str) 
+		{ 
+			var result=str.match(/(^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+$)|(^$)/); 
+			if(result==null) return false; 
+			return true; 
+		}
+/*]]>*/
+</script>
+

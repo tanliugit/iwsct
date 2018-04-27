@@ -1,0 +1,43 @@
+<div class="layui-header lxcy-header">
+	<div class="layui-logo lxcy-logo" >
+		<img src="/static/images/common/logo.png"  alt="Logo" style="height: 60px;width: 185px;" />
+	</div>
+	<!-- <!-- 头部区域（可配合layui已有的水平导航） -->
+	<!-- <ul class="layui-nav layui-layout-left lxcy-layout-left">
+		<th:block th:each="menu,iterStat:${rootMenus}">
+			<th:block th:switch="${menu.id == rootId or (rootId == 0 and iterStat.first)}">
+				<li th:case="true" class="layui-nav-item lxcy-nav-item layui-this" >
+					<a th:href="${menu.url}+'?rootId='+${menu.id}" th:text="${menu.name}"></a>
+				</li>
+				 <li th:case="false" class="layui-nav-item lxcy-nav-item" >
+					<a th:href="${menu.url}+'?rootId='+${menu.id}" th:text="${menu.name}"></a>
+			 	</li>
+			</th:block>
+		</th:block>
+	</ul> -->
+	<ul class="layui-nav layui-layout-right">
+		<li class="layui-nav-item lxcy-nav-item">
+			<a href="javascript:;">
+				<img src="/static/images/common/1_3.png" alt="" />
+			</a>
+		</li>
+		<li class="layui-nav-item lxcy-nav-item">
+			<a href="javascript:;">
+				<img src="/static/images/common/1_4.png" alt="" />
+			</a>
+		</li>
+		<li class="layui-nav-item lxcy-nav-item">
+			<a href="javascript:;">
+				<img src="/static/images/common/1_5.png" alt="" />
+			</a>
+			<dl class="layui-nav-child lxcy-nav-child">
+				<dd>
+					<a onclick="return $.dialog.openSimple('新增','/password',600, 300);" href="javascript:void(0);"><img class="lxcy-icon" src="/static/images/common/2_6.png" alt="" />修改密码</a>
+				</dd>
+				<dd>
+					<a href="/logout"><img class="lxcy-icon" src="/static/images/common/2_7.png" alt="" />退出登录</a>
+				</dd>
+			</dl>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,312 @@
+package com.letsun.iwsct.itface.controller;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.letsun.iwsct.itface.domain.TcorpArea;
+import com.letsun.iwsct.itface.domain.Tfans;
+import com.letsun.iwsct.itface.domain.Tposition;
+import com.letsun.iwsct.itface.domain.Tresume;
+import com.letsun.iwsct.itface.service.TcorpAreaService;
+import com.letsun.iwsct.itface.service.TfansService;
+import com.letsun.iwsct.itface.service.TpositionService;
+import com.letsun.iwsct.itface.service.TresumeService;
+import com.letsun.iwsct.itface.service.TweblookPvuvService;
+
+@Controller
+@RequestMapping("w/crossDomain")
+public class WxCrossDomainController extends BaseController {
+
+	@Autowired
+	private TcorpAreaService tcorpAreaService;
+
+	@Autowired
+	private TpositionService tpositionService;
+
+	@Autowired
+	private TfansService tfansService;
+
+	@Autowired
+	private TresumeService tresumeService;
+
+	@Autowired
+	private TweblookPvuvService tweblookPvuvService;
+
+	/**
+	 * 2018-4-1 add by tanliu 异步提交 投递简历 get方式提交 用于外部跨域访问
+	 * */
+	@SuppressWarnings("finally")
+	@RequestMapping(value = "/submitData/{corpid}/{areaid}/{positionid}")
+	@ResponseBody
+	public String jsonpcallback(ModelMap model, HttpServletRequest request,
+			@PathVariable java.lang.Long corpid, @PathVariable Long areaid,
+			@PathVariable Long positionid, HttpServletResponse response)
+			throws Exception {
+		response.setContentType("text/plain; charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		String status = "false";
+		String msg = "提交失败";
+		String callback = request.getParameter("submitDataback");
+
+		TcorpArea tArea = tcorpAreaService.selectById(areaid);
+		if (tArea == null) {
+			msg = "数据出错！";
+			response.getWriter().print(
+					callback + "({'status':'" + status + "','msg':'" + msg
+							+ "'})");
+			return null;
+		}
+
+		Tposition tposition = tpositionService.selectById(positionid);
+		if (tposition == null) {
+			msg = "数据出错！";
+			response.getWriter().print(
+					callback + "({'status':'" + status + "','msg':'" + msg
+							+ "'})");
+			return null;
+		}
+
+		String candidate = request.getParameter("candidate");
+		String idnumber = request.getParameter("idnumber");
+		String mobile = request.getParameter("mobile");
+
+		// 备用字段
+		String content = request.getParameter("content");
+		String remarks = request.getParameter("remarks");
+
+		// 专业
+		String specialty = request.getParameter("specialty");
+		// 年级
+		String grade = request.getParameter("grade");
+		// 学校
+		String school = request.getParameter("school");
+		// 籍贯
+		String hail = request.getParameter("hail");
+		// email
+		String email = request.getParameter("email");
+		String type = request.getParameter("type");
+		String hunterOpenid = request.getParameter("hunterOpenid");
+		String uncheckRepeat = request.getParameter("uncheckRepeat");
+
+		String age = request.getParameter("age");
+		String sex = request.getParameter("sex");
+		String education = request.getParameter("education");
+
+		Long ageLong = (age == null || "".contains(age)) ? 0L : Long
+				.parseLong(age);
+
+		// 更新粉丝关联数据
+		String fansid = request.getParameter("fansid");
+		if (StringUtils.isNotBlank(fansid) && !StringUtils.equals(type, "-1")) {
+			Tfans fans = tfansService.selectById(Long.valueOf(fansid));
+			if (fans != null) {
+				fans.setShopid(positionid.intValue());
+				// fans.setHelpscore(0);
+				// fans.setHelpnum(0);
+				tfansService.updateById(fans);
+			}
+		}
+		if (StringUtils.equals(type, "-1")) {
+			type = "";
+		}
+
+		if (!StringUtils.equals(uncheckRepeat, "2")) {
+
+			if (StringUtils.isAllBlank(candidate, idnumber, mobile)) {
+				response.getWriter().print(
+						callback + "({'status':'" + status
+								+ "','msg':'输入数据不完整！'})");
+				return null;
+			}
+		}
+
+		try {
+			if (!StringUtils.equals(uncheckRepeat, "1")
+					&& !StringUtils.equals(uncheckRepeat, "2")) {
+				// 判断企业统一岗位 同一手机号是否已提交过
+				if (mobile != null) {
+					Map<String, Object> paramsMap = new LinkedHashMap<String, Object>();
+					paramsMap.put("corpid", corpid);
+					paramsMap.put("positionid", positionid);
+					paramsMap.put("mobile", mobile);
+					paramsMap.put("status", 1);
+
+					List<Tresume> listResume = tresumeService
+							.selectByMap(paramsMap);
+					// List<Tresume> listResume = (List<Tresume>)
+					// tresumeService.findAllByPropertyes(Tresume.class,
+					// paramsMap);
+					if (listResume.size() > 0) {
+						// map.put("msg", "此岗位，同一身份证号已经提交了应聘信息");
+						msg = "同一手机号已经提交过了";
+						response.getWriter().print(
+								callback + "({'status':'" + status
+										+ "','msg':'" + msg + "'})");
+						return null;
+					}
+				}
+			}
+
+			if (StringUtils.equals(uncheckRepeat, "2")) {
+				Map<String, Object> paramsMap = new HashMap<String, Object>();
+				paramsMap.put("status", 1);
+				paramsMap.put("corpid", corpid);
+				paramsMap.put("fansid", Long.parseLong(fansid));
+				// List<Tresume> resumeList = (List<Tresume>)
+				// this.tresumeManager.findAllByPropertyes(Tresume.class,
+				// paramsMap);
+				List<Tresume> resumeList = (List<Tresume>) tresumeService
+						.selectByMap(paramsMap);
+				if (!CollectionUtils.isEmpty(resumeList)) {
+					Tresume resumeUpdate = resumeList.get(0);
+					String origContent = resumeUpdate.getContent();
+					origContent = origContent == null ? "" : origContent;
+					origContent += content;
+					resumeUpdate.setContent(origContent);
+					if (StringUtils.isNotBlank(remarks)) {
+						resumeUpdate.setRemarks(encodingCharset(remarks));
+					}
+					this.tresumeService.updateById(resumeUpdate);
+				} else {
+
+					this.saveTresume(corpid, areaid, positionid, candidate,
+							idnumber, mobile, content, remarks, specialty,
+							grade, school, hail, email, type, fansid, ageLong,
+							sex, education);
+				}
+			} else {
+				this.saveTresume(corpid, areaid, positionid, candidate,
+						idnumber, mobile, content, remarks, specialty, grade,
+						school, hail, email, type, fansid, ageLong, sex,
+						education);
+			}
+
+			long count = 0;
+			if (StringUtils.isNotBlank(hunterOpenid)) {
+				String ip = getIpAddr();
+				count = this.tweblookPvuvService.savePvuvForUrl2(ip, corpid,
+						hunterOpenid, "data");
+			}
+
+			msg = "提交成功";
+			status = "true";
+			response.getWriter().print(
+					callback + "({'status':'" + status + "','msg':'" + msg
+							+ "', 'count':'" + count + "'})");
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.getWriter().print(
+					callback + "({'status':'" + status + "','msg':'" + msg
+							+ "', 'count':'-1'})");
+		} finally {
+			return null;
+		}
+	}
+
+	/**
+	 * 
+	 * @param nickname
+	 * @return
+	 */
+	public static String encodingCharset(String nickname) {
+		if (StringUtils.isNoneBlank(nickname)) {
+			try {
+				if (nickname.equals(new String(nickname.getBytes("ISO8859-1"),
+						"ISO8859-1"))) {
+					nickname = new String(nickname.getBytes("ISO8859-1"),
+							"UTF-8");
+				}
+			} catch (UnsupportedEncodingException ignore) {
+			}
+		}
+		return nickname;
+	}
+
+	/**
+	 * 
+	 * @param corpid
+	 * @param areaid
+	 * @param positionid
+	 * @param candidate
+	 * @param idnumber
+	 * @param mobile
+	 * @param content
+	 * @param remarks
+	 * @param specialty
+	 * @param grade
+	 * @param school
+	 * @param hail
+	 * @param email
+	 * @param type
+	 * @param fansid
+	 * @param age
+	 *            年龄
+	 * @param sex
+	 *            性别
+	 * @param education
+	 *            最高学历
+	 * @throws UnsupportedEncodingException
+	 */
+	private void saveTresume(java.lang.Long corpid, Long areaid,
+			Long positionid, String candidate, String idnumber, String mobile,
+			String content, String remarks, String specialty, String grade,
+			String school, String hail, String email, String type,
+			String fansid, Long age, String sex, String education)
+			throws UnsupportedEncodingException {
+		// 保存
+		Tresume resume = new Tresume();
+		resume.setCorpid(corpid);
+		resume.setAreaid(Long.valueOf(areaid));
+		resume.setPositionid(Long.valueOf(positionid));
+		resume.setStatus(1);
+		resume.setSchedule(1);
+
+		// resume.setTinvtPosition(new TinvtPosition(Long.valueOf(positionid)));
+		resume.setCandidate(candidate);
+		resume.setMobile(mobile);
+		resume.setIdnumber(idnumber);
+
+		resume.setCreateDate(new Date());
+
+		// 备用字段
+		resume.setContent(content == null ? "" : content);
+		resume.setRemarks(remarks == null ? "" : encodingCharset(remarks));
+		resume.setSpecialty(specialty == null ? "" : specialty);
+		resume.setGrade(grade == null ? "" : grade);
+		resume.setSchool(school == null ? "" : school);
+		resume.setHail(hail == null ? "" : hail);
+		resume.setEmail(email == null ? "" : email);
+
+		// 年龄性别最高学历
+		resume.setAge(age);
+		resume.setSex(sex);
+		resume.setEducation(education);
+
+		// 关联的粉丝id
+		resume.setFansid(fansid == null ? null : Long.valueOf(fansid));
+		if (StringUtils.isNotBlank(type)) {
+			resume.setEducation(type);
+		}
+
+		this.tresumeService.insert(resume);
+		// tresumeManager.save(resume);
+	}
+}

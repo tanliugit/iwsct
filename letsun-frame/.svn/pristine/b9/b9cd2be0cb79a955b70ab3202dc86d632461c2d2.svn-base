@@ -1,0 +1,54 @@
+package com.letsun.frame.security.common.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.letsun.frame.security.system.domain.Menu;
+import com.letsun.frame.security.system.domain.Role;
+import com.letsun.frame.security.system.service.MenuService;
+
+/**
+ * @Desc 首页controller  
+ * @author YY  
+ * @date 2018年4月12日
+ */
+@Controller
+public class IndexAdminController extends BaseAdminController {
+
+	@Autowired
+	private MenuService menuService;
+
+	@RequestMapping("/")
+	public String index(Model model) {
+		return "redirect:/index";
+	}
+
+	@RequestMapping("/index")
+	public String admnIndex(ModelMap mmp) {
+		if (getLoginUser() != null && getLoginUser().getUser() != null) {
+			List<Role> rolesList = getLoginUser().getUser().getRoles();
+			List<Menu> allMenus = new ArrayList<Menu>();
+			if (rolesList != null && !rolesList.isEmpty()) {
+				for (Role role : rolesList) {
+					// 只取菜单和目录，过滤掉首页和功能
+					Stream<Menu> stream = role.getMenus().stream().filter(
+							menu -> ((menu.getType() == 0 || menu.getType() == 1) && !"/index".equals(menu.getUrl())));
+					allMenus.addAll(stream.collect(Collectors.toList()));
+				}
+			}
+			// 获取顶级菜单0L下面的所有子菜单
+			List<Menu> leftMenus = menuService.getchildMenus(allMenus, 0L);
+			mmp.put("rootMenus", leftMenus);
+		}
+		return "/index";
+	}
+
+}

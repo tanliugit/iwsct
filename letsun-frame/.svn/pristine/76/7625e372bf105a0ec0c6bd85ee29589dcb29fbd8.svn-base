@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<div class="layui-form-item">
+			<label class="layui-form-label">操作IP</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.requestIp}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">请求URL</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.requestUrl}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">请求参数</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.requestParams}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类路径</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.classPath}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">方法名称</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.methodName}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">方法参数</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.methodParams}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">业务类型</label>
+			<div class="layui-input-block">
+				<input type="text" th:if="${obj.businessType ==0}"  value="其他" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==1}"  value="新增" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==2}"  value="修改" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==3}"  value="删除" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==4}"  value="授权" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==5}"  value="导出" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==6}"  value="导入" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==7}"  value="登录" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==8}"  value="退出登录" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessType ==9}"  value="禁止访问" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">业务模块</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.businessName}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">业务状态</label>
+			<div class="layui-input-block">
+				<input type="text" th:if="${obj.businessStatus ==0}"  value="其他" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessStatus ==1}"  value="成功" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.businessStatus ==2}"  value="失败" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">业务备注</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.businessRemarks}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">操作类型</label>
+			<div class="layui-input-block">
+				<input type="text" th:if="${obj.operatorType ==0}" value="其他" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.operatorType ==1}" value="manage用户" class="layui-input" disabled="disabled"/>
+				<input type="text" th:if="${obj.operatorType ==2}" value="mobile用户" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<!-- <div class="layui-form-item">
+			<label class="layui-form-label">更新前JSOn对象</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.beforeUpdateJson}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">更新后JSOn对象</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.afterUpdateJson}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div> -->
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

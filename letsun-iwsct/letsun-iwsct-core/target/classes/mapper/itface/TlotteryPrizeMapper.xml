@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.iwsct.itface.mapper.TlotteryPrizeMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.iwsct.itface.domain.TlotteryPrize" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="name" column="NAME" jdbcType="VARCHAR"/>
+	  	<result property="lotteryid" column="LOTTERYID" jdbcType="BIGINT"/>
+	  	<result property="probability" column="PROBABILITY" jdbcType="DOUBLE"/>
+	  	<result property="level" column="LEVEL" jdbcType="INTEGER"/>
+	  	<result property="total" column="TOTAL" jdbcType="INTEGER"/>
+	  	<result property="maxsum" column="MAXSUM" jdbcType="INTEGER"/>
+	  	<result property="daysum" column="DAYSUM" jdbcType="INTEGER"/>
+	  	<result property="contents" column="CONTENTS" jdbcType="LONGVARCHAR"/>
+	  	<result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+	  	<result property="picurl" column="PICURL" jdbcType="VARCHAR"/>
+	  	<result property="type" column="TYPE" jdbcType="INTEGER"/>
+	  	<result property="score" column="SCORE" jdbcType="INTEGER"/>
+	  	<result property="creator" column="CREATOR" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+	  	<result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,name,lotteryid,probability,level,total,maxsum,daysum,contents,remark,picurl,type,score,creator,create_date,modifier,modify_date,deleted
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.name,A.lotteryid,A.probability,A.level,A.total,A.maxsum,A.daysum,A.contents,A.remark,A.picurl,A.type,A.score,A.creator,A.create_date,A.modifier,A.modify_date,A.deleted
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from t_lottery_prize A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+    
+    <!-- 多表关联查询 -->  
+    <select id="getlistPrize" resultMap="ResultMapBase" parameterType="java.lang.Long">
+    
+		select <include refid="BaseColumnComplex"/>
+		
+	 	from t_lottery_prize A
+	 	
+	 	<where>
+	 	
+	 		<if test="lotteryid != null">
+	 			and lotteryid = #{lotteryid}
+	 		</if>
+	 		
+	 		and maxsum > ifnull(total,0)
+	 	
+	 	</where>
+    </select>
+    
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',#{name},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

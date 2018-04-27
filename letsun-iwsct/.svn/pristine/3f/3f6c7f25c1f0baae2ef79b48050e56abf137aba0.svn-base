@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<div class="layui-form-item">
+			<label class="layui-form-label">微刊URL</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.url}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">粉丝ID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.fansid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CORPID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.corpid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">ORGID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.orgid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">统计类型：1:URL，2：点击，3:（其他）</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.type}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问IP</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.visitip}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问次数</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.visitsum}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问时间</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.visittime}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

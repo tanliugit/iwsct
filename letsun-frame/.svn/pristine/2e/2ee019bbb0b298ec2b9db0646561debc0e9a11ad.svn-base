@@ -1,0 +1,25 @@
+package com.letsun.generator;
+
+import org.apache.commons.lang3.StringUtils;
+
+import cn.org.rapid_framework.generator.GeneratorFacade;
+import cn.org.rapid_framework.generator.GeneratorProperties;
+
+public class GeneratorMain{
+
+	public static void main(String[] args) throws Exception
+		  {
+		    GeneratorFacade g = new GeneratorFacade();
+		    g.getGenerator().addTemplateRootDir(GeneratorProperties.getProperty("templateRootDir"));
+		    g.deleteOutRootDir();
+		    
+		    String tables = GeneratorProperties.getProperty("generatorTables");
+		    if (StringUtils.isNotEmpty(tables)) {
+		       g.generateByTable(tables.split(","));
+		    } else {
+		       g.generateByAllTable();
+		    }
+		    Runtime.getRuntime().exec("cmd.exe /c start " + GeneratorProperties.getRequiredProperty("outRoot"));
+		  }
+
+}

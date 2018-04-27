@@ -1,0 +1,87 @@
+package com.letsun.frame.core.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.baomidou.mybatisplus.plugins.Page;
+
+
+/**
+ * @Desc Controller基类
+ * @author YY<2017年10月11日>
+ */
+@Controller
+public class BaseController {
+	protected final Logger logger = LoggerFactory.getLogger(BaseController.class);
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+	}
+	
+	public ServletRequestAttributes getRequestAttributes(){
+		RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
+	    return (ServletRequestAttributes) attributes;
+	}
+	
+	/**
+	 * @Desc 获取request
+	 * @return
+	 * @author YY<2017年12月7日>
+	 */
+	public HttpServletRequest getRequest() {
+		return getRequestAttributes().getRequest();
+	}
+	
+	/**
+	 * @Desc 获取response
+	 * @return
+	 * @author YY<2017年12月7日>
+	 */
+	public HttpServletResponse getResponse() {
+		return getRequestAttributes().getResponse();
+	}
+	
+	/**
+	 * @Desc 获取session
+	 * @return
+	 * @author YY<2017年12月7日>
+	 */
+	public HttpSession getSession() {
+		return getRequest().getSession();
+	}
+	
+	/**
+	 * @Desc list转 Map
+	 * @param pageInfo
+	 * @return
+	 * @author YY<2017年10月24日>
+	 */
+	public Map<String, Object> toLayuiList(final Page<?> page) {
+		HashMap<String, Object> map = new HashMap<String, Object>(8);
+		map.put("code", 0);
+		map.put("msg", "success");
+		map.put("page", page.getCurrent());
+		map.put("count", page.getTotal());
+		map.put("data", page.getRecords());
+		return map;
+	}
+}

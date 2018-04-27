@@ -1,0 +1,111 @@
+package com.letsun.frame.security.common.shiro;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.servlet.Filter;
+
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.codec.Base64;
+import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @Desc Shiro配置
+ * @author YY  
+ * @date 2018年4月12日
+ */
+@Configuration
+public class ShiroConfig {
+	
+	@Autowired private ShiroRealm shiroRealm;
+	
+    /**
+     * 记住密码Cookie(七天有效期)
+     */
+    @Bean
+    public SimpleCookie rememberMeCookie() {
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        simpleCookie.setHttpOnly(true);
+        simpleCookie.setMaxAge(7 * 24 * 60 * 60);
+        return simpleCookie;
+    }
+    
+    /**
+     * rememberMe管理器, cipherKey生成见{@code Base64Test.java}
+     */
+    @Bean
+    public CookieRememberMeManager rememberMeManager(SimpleCookie rememberMeCookie) {
+        CookieRememberMeManager manager = new CookieRememberMeManager();
+        manager.setCipherKey(Base64.decode("Z3VucwAAAAAAAAAAAAAAAA=="));
+        manager.setCookie(rememberMeCookie);
+        return manager;
+    }
+
+	/**
+	 * EhCache缓存
+	 * @return
+	 */
+	@Bean
+	public EhCacheManager getEhCacheManager() {
+		EhCacheManager ehcacheManager = new EhCacheManager();
+		ehcacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
+		return ehcacheManager;
+	}
+	
+	/**
+	 * Shiro安全管理器
+	 * @param rememberMeManager
+	 * @param cacheShiroManager
+	 * @param sessionManager
+	 * @return
+	 */
+    @Bean
+    public DefaultWebSecurityManager securityManager(CookieRememberMeManager rememberMeManager, CacheManager cacheShiroManager) {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        securityManager.setRealm(shiroRealm);
+        securityManager.setRememberMeManager(rememberMeManager);
+        securityManager.setCacheManager(cacheShiroManager);
+        return securityManager;
+    }
+
+    
+	/**
+	 * Shiro的过滤器配置
+	 * @param securityManager
+	 * @return
+	 */
+    @Bean
+	public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager) {
+		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+		shiroFilterFactoryBean.setSecurityManager(securityManager);
+		// 配置登录的url和登录成功的url
+		shiroFilterFactoryBean.setLoginUrl("/login");
+		shiroFilterFactoryBean.setSuccessUrl("/index");
+		shiroFilterFactoryBean.setUnauthorizedUrl("/forbid");
+		// 配置访问权限
+		LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+		filterChainDefinitionMap.put("/static/**", "anon");
+		filterChainDefinitionMap.put("/login**", "anon");
+		filterChainDefinitionMap.put("/logout**", "anon");
+		filterChainDefinitionMap.put("/forbid", "anon");
+		filterChainDefinitionMap.put("/w/**", "anon");
+		filterChainDefinitionMap.put("/captcha/**", "anon");
+		filterChainDefinitionMap.put("/index", "user");
+		filterChainDefinitionMap.put("/password", "user");
+		filterChainDefinitionMap.put("/**", "authc,perms");
+		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+
+		// 配置过滤器
+		Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
+		filtersMap.put("perms", new ShiroFilter());
+		shiroFilterFactoryBean.setFilters(filtersMap);
+		return shiroFilterFactoryBean;
+	}
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--公共头部-->
+<th:block th:include="/common/layout/header" />
+<!--公共头部结束-->
+<title>页面标题</title>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin lxcy-layout-admin">
+   	 <!--头部导航菜单 start-->
+	<th:block th:include="/common/layout/topNav" />
+   	<!--头部导航菜单 end-->
+
+    <div class="layui-fluid lxcy-fluid">
+         <!-- 左侧导航菜单 start -->
+		<th:block th:include="/common/layout/leftNav" />
+		 <!-- 左侧导航菜单 end -->
+
+        <!-- 内容主体区域 start -->
+        <div class="layui-body lxcy-body" id="js-lxcyBody">
+            <!-- 面包屑导航 start -->
+            <div class="bread-nav">
+                <i class="layui-icon lxcy-icon">&#xe68e;</i>
+                                       当前位置：<span class="layui-breadcrumb" lay-separator=">"><a>模块名称1</a><a>模块名称2</a>
+				</span>
+            </div>
+            <!-- 面包屑导航 end -->
+
+            <div class="lxcy-container">
+                <i class="lxcy-toggle" id="js-showLeftNav"></i>
+                <!-- 自定义内容区域 start -->
+                <div class="record-center-container">
+                    <!-- 表单 start -->
+                   <form  class="layui-form layui-form-pane">
+					  <div class="layui-form-item">
+						  <div class="layui-inline">
+						    <label class="layui-form-label">名称</label>
+						    <div class="layui-input-inline" style="width: 178px;">
+						      <input type="text" name="name"  class="layui-input"/>
+						    </div>
+						  </div>
+						  <div class="layui-inline">
+						    <label class="layui-form-label">状态</label>
+						   	<div class="layui-input-inline" style="width: 178px;">
+						       <select name="status">
+						        <option value="">请选择</option>
+						        <option value="0">启用</option>
+						        <option value="1">禁用</option>
+						       </select>
+						    </div>
+						  </div>
+						  <button onclick="return $.table.search();"  class="layui-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+						  <button onclick="return $.dialog.openSimple('新增','add',800, 500);"  class="layui-btn layui-btn-normal"><i class="layui-icon">&#xe654;</i>新增</button>
+					  </div>
+					</form>
+                    <!-- 表单 end -->
+
+                    <!-- 表格 start -->
+                   <table class="layui-table" lay-data="{cellMinWidth:200,url:'/itface/tcorp/list',page:true, id:'layui-table'}" lay-filter="layui-table-filter">
+					  <thead>
+					    <tr>
+					      <!-- <th lay-data="{type:'checkbox', fixed: 'left'}"></th>-->
+					      <th lay-data="{field:'index', width:70,templet:'#indexTpl'}">序号</th>
+					      <th lay-data="{field:'corpid'}">ID</th>
+					      <th lay-data="{field:'name'}">名称</th>
+					      <th lay-data="{field:'type'}">类型</th>
+					      <th lay-data="{field:'enckey'}">enckey</th>
+					      <th lay-data="{field:'token'}">token</th>
+					      <th lay-data="{field:'viewno'}">viewno</th>
+					      <th lay-data="{field:'startdate'}">开始时间</th>
+					      <th lay-data="{field:'enddate'}">结束时间</th>
+					      <th lay-data="{field:'settledate'}">设置时间</th>
+					      <th lay-data="{field:'linkman'}">联系人</th>
+					      <th lay-data="{field:'phone'}">手机</th>
+					      <th lay-data="{field:'email'}">邮箱</th>
+					      <th lay-data="{field:'contact'}">联系方式</th>
+					      <th lay-data="{field:'address'}">地址</th>
+					      <th lay-data="{field:'status'}">状态</th>
+					      <th lay-data="{field:'remark'}">备注</th>
+					      <th lay-data="{field:'storecorpid'}">storeCorpId</th>
+					      <th lay-data="{field:'storecorpkey'}">storeCorpKey</th>
+					      <th lay-data="{field:'createorg'}">CREATEORG</th>
+					      <th lay-data="{field:'createcorp'}">CREATECORP</th>
+					      <th lay-data="{field:'wxicon'}">WXICON</th>
+					      <th lay-data="{field:'wxname'}">WXNAME</th>
+					      <th lay-data="{field:'wxid'}">WXID</th>
+					      <th lay-data="{field:'wxappid'}">WXAPPID</th>
+					      <th lay-data="{field:'wxappsecret'}">WXAPPSECRET</th>
+					      <th lay-data="{field:'wxaccesstoken'}">微信请求获取access_token</th>
+					      <th lay-data="{field:'wxjsapiticket'}">微信请求获取jsapi_ticket</th>
+					      <th lay-data="{field:'wxtokenstamp'}">access_token对应的时间戳</th>
+					      <th lay-data="{field:'wxticketstamp'}">jsapi_ticket对应的时间戳</th>
+					      <th lay-data="{fixed: 'right', width:175, align:'center', toolbar: '#operationBar'}">操作</th>
+					    </tr>
+					  </thead>
+					</table>
+					<script type="text/html" id="indexTpl">
+                        {{d.LAY_TABLE_INDEX+1}}
+                    </script>
+					<script type="text/html" id="operationBar">
+  						<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+ 						<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit">编辑</a>
+  						<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+					</script>
+                    <!-- 表格 end -->
+                </div>
+                <!-- 自定义内容区域 end -->
+            </div>
+        </div>
+        <!-- 内容主体区域 end -->
+    </div>
+        <!-- 底部固定区域 start -->
+		<th:block th:include="/common/layout/footer" />
+		<!-- 底部固定区域 end -->
+</div>
+<!-- 共用JS start -->
+<th:block th:include="/common/layout/footJs" />
+<!-- 共用JS end -->
+</body>
+</html>

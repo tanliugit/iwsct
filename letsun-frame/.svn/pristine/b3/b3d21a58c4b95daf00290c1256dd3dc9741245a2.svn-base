@@ -1,0 +1,159 @@
+package com.letsun.frame.core.common.utils;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * 时间日期工具类
+ * 
+ * @author zhongy
+ *
+ */
+public class TimeUtils {
+
+	public static String YYYY = "yyyy";
+
+	public static String YYYY_MM = "yyyy-MM";
+
+	public static String YYYY_MM_DD = "yyyy-MM-dd";
+
+	public static String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+	
+	private static Logger logger = LoggerFactory.getLogger(TimeUtils.class);
+	
+	public static String parseDateToStr(Date date, String dateFormat){
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		String str = sdf.format(date);
+		return str;
+	}
+
+	public static Date format(String dateStr, String dateFormat){
+		if (StringUtils.isNotBlank(dateStr)) {
+			try {
+				DateFormat format = new SimpleDateFormat(dateFormat);
+				return format.parse(dateStr);
+			} catch (ParseException e) {
+				logger.error("时间日期转换异常",e);
+			}
+		}
+		return null;
+	}
+
+	//获取当前时间需要传递时间格式
+	public static String getCurrentTime(String dateFormat){
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		String str = sdf.format(date);
+		return str;
+	}
+	
+	@SuppressWarnings("static-access")
+	public static Date addDay(Date date, Integer num) {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		// 把日期往后增加一天.整数往后推,负数往前移动
+		calendar.add(calendar.DATE, num);
+		return calendar.getTime();
+	}
+	
+	// 获取上一个月
+	public static String beforeMonth(Date date, Integer month) throws ParseException  {
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.add(Calendar.MONTH, month);
+		Date dateTime = calendar.getTime();
+		return TimeUtils.parseDateToStr(dateTime, TimeUtils.YYYY_MM);
+	}
+
+	  // 获得本周一与当前日期相差的天数  
+    public static  int getMondayPlus() {  
+        Calendar cd = Calendar.getInstance();  
+        int dayOfWeek = cd.get(Calendar.DAY_OF_WEEK);  
+        if (dayOfWeek == 1) {  
+            return -6;  
+        } else {  
+            return 2 - dayOfWeek;  
+        }  
+    }  
+  
+    /**
+     * 获取传入日期该周开始日期、周一
+     * @param date
+     * @param dateFormat
+     * @return
+     */
+    public static Date getCurrentMonday() {  
+        int mondayPlus = getMondayPlus();  
+        GregorianCalendar currentDate = new GregorianCalendar();  
+        currentDate.add(GregorianCalendar.DATE, mondayPlus);  
+        Date monday = currentDate.getTime();  
+        DateFormat df = DateFormat.getDateInstance();  
+        String preMonday = df.format(monday); 
+        return TimeUtils.format(preMonday, TimeUtils.YYYY_MM_DD);
+    }  
+  
+  
+    /**
+     * 获取传入日期该周结束日期、周日
+     * @param date
+     * @param dateFormat
+     * @return
+     */ 
+    public static Date getPreviousSunday() {  
+        int mondayPlus = getMondayPlus();  
+        GregorianCalendar currentDate = new GregorianCalendar();  
+        currentDate.add(GregorianCalendar.DATE, mondayPlus +6);  
+        Date monday = currentDate.getTime();  
+        DateFormat df = DateFormat.getDateInstance();  
+        String preMonday = df.format(monday); 
+        return TimeUtils.format(preMonday, TimeUtils.YYYY_MM_DD);
+    }  
+    
+    /**
+     * 获取传入日期该月开始日期
+     * @param date
+     * @param dateFormat
+     * @return
+     */ 
+    public static Date getMinMonthDate(String date,String dateFormat) {  
+        Calendar calendar = Calendar.getInstance(); 
+        try {  
+        	SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+            calendar.setTime(sdf.parse(date));  
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));  
+            String  minMonthDate = sdf.format(calendar.getTime());  
+            return TimeUtils.format(minMonthDate,dateFormat);
+        } catch (java.text.ParseException e) { 
+        	logger.error("时间日期转换异常",e);
+        }  
+        return null;  
+    }  
+  
+    /**
+     * 获取传入日期该月结束日期
+     * @param date
+     * @param dateFormat
+     * @return
+     */
+    public static Date getMaxMonthDate(String date,String dateFormat){  
+        Calendar calendar = Calendar.getInstance();  
+        try {  
+        	SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+            calendar.setTime(sdf.parse(date));  
+            calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));  
+            String maxMonthDate = sdf.format(calendar.getTime()); 
+            return TimeUtils.format(maxMonthDate,dateFormat);
+        }  catch (java.text.ParseException e) {  
+        	logger.error("时间日期转换异常",e);
+        }  
+        return null;  
+    } 
+}

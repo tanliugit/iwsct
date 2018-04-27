@@ -1,0 +1,76 @@
+.clearFix:before,
+.clearFix:after {
+  content: " ";
+  display: table;
+}
+.clearFix:after {
+  clear: both;
+}
+/* 颜色值 */
+/* 公共图片路径 */
+.lxcy-window-container {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background: url('../../images/common/mask.png') repeat;
+}
+.lxcy-window-container .lxcy-window-win {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 707px;
+  min-height: 500px;
+  margin-top: -250px;
+  margin-left: -353.5px;
+  background: #fff;
+  box-shadow: 0 0 12px -1px #222;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-header {
+  font-size: 17px;
+  line-height: 57px;
+  position: relative;
+  height: 57px;
+  padding-left: 44px;
+  border-bottom: 1px solid #eef1f9;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-header:before {
+  position: absolute;
+  top: 19px;
+  left: 26px;
+  width: 2px;
+  height: 20px;
+  content: '';
+  background: #6dc3ea;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-content {
+  position: relative;
+  width: 100%;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-btn {
+  height: 79px;
+  border-top: 1px solid #eef1f9;
+  position: relative;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-btn .lxcy-btn-container {
+  position: absolute;
+  right: 58px;
+  top: 21px;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-btn .lxcy-btn-container .lxcy-btn-cancel,
+.lxcy-window-container .lxcy-window-win .lxcy-window-btn .lxcy-btn-container .lxcy-btn-yes {
+  height: 36px;
+  line-height: 36px;
+  padding: 0 30px;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-btn .lxcy-btn-container .lxcy-btn-cancel {
+  color: #555;
+  background: #cecece;
+}
+.lxcy-window-container .lxcy-window-win .lxcy-window-btn .lxcy-btn-container .lxcy-btn-yes {
+  background: #6dc3ea;
+  margin-left: 20px;
+}

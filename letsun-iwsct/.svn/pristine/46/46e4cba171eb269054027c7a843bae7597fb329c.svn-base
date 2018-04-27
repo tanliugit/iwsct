@@ -1,0 +1,44 @@
+.clearFix:before,
+.clearFix:after {
+  content: " ";
+  display: table;
+}
+.clearFix:after {
+  clear: both;
+}
+/* 颜色值 */
+/* 公共图片路径 */
+.lxcy-body {
+  top: 0 !important;
+  right: 30px;
+  bottom: auto !important;
+  left: 240px;
+  overflow: inherit;
+}
+.lxcy-body .bread-nav {
+  line-height: 35px;
+  position: absolute;
+  top: -41px;
+  left: 0;
+  height: 41px;
+  color: #999;
+}
+.lxcy-body .bread-nav .lxcy-icon {
+  margin-right: 7px;
+}
+.lxcy-body .lxcy-container {
+  overflow-y: auto;
+  height: 634px;
+  padding: 33px 35px;
+  background: #fff;
+}
+.lxcy-body .lxcy-container .lxcy-toggle {
+  position: absolute;
+  top: 0;
+  left: 2px;
+  display: none;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background: url('../../images/common/2_4.png');
+}

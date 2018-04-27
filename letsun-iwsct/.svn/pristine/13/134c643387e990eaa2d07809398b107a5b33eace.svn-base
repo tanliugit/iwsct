@@ -1,0 +1,176 @@
+.clearFix:before,
+.clearFix:after {
+  content: " ";
+  display: table;
+}
+.clearFix:after {
+  clear: both;
+}
+/* 颜色值 */
+/* 公共图片路径 */
+::-webkit-scrollbar {
+  width: 14px;
+}
+::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-track {
+  background-color: #999;
+}
+::-webkit-scrollbar-thumb:active,
+::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: #999;
+}
+.list-body::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: transparent;
+}
+.list-body:hover::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #999;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-track:hover {
+  background: transparent;
+}
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track:active {
+  background: transparent;
+}
+/* 颜色值 */
+/* 公共图片路径 */
+html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  height: 100%;
+  background: #fff;
+}
+body .lxcy-fluid {
+  margin-top: 70px;
+  padding: 0 20px 0 0;
+}
+body .lxcy-fluid:before,
+body .lxcy-fluid:after {
+  content: " ";
+  display: table;
+}
+body .lxcy-fluid:after {
+  clear: both;
+}
+body .lxcy-footer {
+  position: relative;
+  padding: 27px 0;
+  text-align: center;
+  color: #c1c1c3;
+}
+/* 重置表格表头样式 */
+.layui-table {
+  border: none;
+}
+.layui-table thead tr {
+  background: #eef1f9;
+}
+.layui-table-view {
+  border: none;
+}
+.layui-table-view th {
+  border-color: #e1e1e1;
+}
+.layui-table-view td {
+  height: 50px;
+  line-height: 50px;
+  border: none;
+  border-bottom: 1px solid #eef1f9;
+}
+/* 重置分页 */
+.layui-table-page {
+  padding-top: 12px;
+  /* 分页右靠齐 */
+}
+.layui-table-page > div:first-child {
+  position: absolute;
+  right: 10px;
+}
+/* 重置单选按钮样式 */
+.layui-form-radio i:hover,
+.layui-form-radio i,
+.layui-form-radioed i {
+  color: #6dc3ea;
+  font-size: 16px;
+}
+/* 下拉框添加竖线 */
+.lxcy-vertical-line {
+  position: absolute;
+  right: 30px;
+  top: 6px;
+  z-index: 1;
+  height: 25px;
+  width: 0;
+  border-left: 1px solid #ddd;
+}
+/* 重置表单输入框样式 */
+.layui-input {
+  padding-right: 10px;
+}
+/* 重置弹窗样式 */
+.layui-layer-title {
+  position: relative;
+  background-color: #fff !important;
+  border-bottom: 1px solid #eef1f9 !important;
+  height: 47px !important;
+  line-height: 47px !important;
+  padding-left: 38px !important;
+  font-size: 16px !important;
+}
+.layui-layer-title:before {
+  position: absolute;
+  top: 13px;
+  left: 26px;
+  width: 2px;
+  height: 20px;
+  content: '';
+  background: #6dc3ea;
+}
+.layui-layer-btn a {
+  font-size: 12px;
+}
+.layui-layer-btn a:first-child {
+  background: #6dc3ea;
+  border: 1px solid #6dc3ea;
+}
+.layui-layer-btn a:nth-child(2) {
+  background: #cecece;
+  border: 1px solid #cecece;
+}
+/* 重置图片预览mask样式 */
+.layui-layer-shade {
+  opacity: 0.7 !important;
+}
+/* 清除input样式 */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #ededed !important;
+  -webkit-box-shadow: 0 0 0px 1000px transparent  inset !important;
+  background-color: transparent;
+  background-image: none;
+  transition: background-color 50000s ease-in-out 0s;
+}
+input {
+  background-color: transparent;
+}

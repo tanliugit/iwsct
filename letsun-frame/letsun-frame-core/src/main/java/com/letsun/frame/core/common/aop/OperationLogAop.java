@@ -1,0 +1,170 @@
+package com.letsun.frame.core.common.aop;
+
+import java.lang.reflect.Method;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.alibaba.fastjson.JSON;
+import com.letsun.frame.core.common.lang.annotation.OperationLogs;
+import com.letsun.frame.core.common.lang.enums.EnumType.BusinessStatus;
+import com.letsun.frame.core.common.lang.enums.EnumType.BusinessType;
+import com.letsun.frame.core.common.lang.exception.BusinessException;
+import com.letsun.frame.core.domain.BaseEntity;
+import com.letsun.frame.core.domain.OperationLog;
+import com.letsun.frame.core.service.OperationLogService;
+/**
+ * @Desc 系统操作日志AOP
+ * @author YY<2017年10月17日>
+ */
+@Aspect
+@Component
+public class OperationLogAop {
+
+	@Autowired
+	OperationLogService operationLogService;
+
+	@Around("execution(* com.letsun..controller.*.*(..)) && @annotation(com.letsun.frame.core.common.lang.annotation.OperationLogs)")
+	public Object interceptor(ProceedingJoinPoint pjp) throws Throwable {
+		long beginTime = System.currentTimeMillis();
+		// 接收到请求，记录请求内容
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		com.letsun.frame.core.domain.OperationLog record = new com.letsun.frame.core.domain.OperationLog();
+		//这里需要在方法执行前后都调用一次，因为登录成功后/退出登录之前
+		BaseEntity operator = (BaseEntity)request.getSession().getAttribute("currentUserLogin");
+		record.setCreator(operator !=null ? operator.getCreator() : "非登陆用户操作");
+		Object obj = null;
+		try {
+			obj = pjp.proceed();
+			record.setBusinessStatus(BusinessStatus.SUCCESS.ordinal());
+			record.setBusinessRemarks("操作成功");
+		} catch (BusinessException e) {
+			//只记录业务异常，其他系统异常不做操作记录，由系统错误日志记录
+			record.setBusinessStatus(BusinessStatus.FAIL.ordinal());
+			record.setBusinessRemarks("操作失败:" + e.getMessage());
+		}
+		
+  		record.setRequestIp(request.getRemoteAddr());
+  		record.setRequestUrl(request.getRequestURL().toString());
+  		record.setRequestParams(JSON.toJSONString(request.getParameterMap()));
+  		
+		long endTime = System.currentTimeMillis();
+		long durationTime = (endTime - beginTime) / 1000;
+		record.setBusinessRemarks(record.getBusinessRemarks()+",执行时长(s):" + durationTime);
+		// 获取被拦截的方法
+		MethodSignature signature = (MethodSignature) pjp.getSignature();
+		record.setClassPath(signature.getDeclaringTypeName());
+		Method method = signature.getMethod();
+        //获取被拦截的方法名  
+        String methodName = method.getName();
+		record.setMethodName(methodName);
+		record.setMethodParams(JSON.toJSONString(method.getParameters()));
+		//获取方法注解
+        OperationLogs operationLogs = method.getAnnotation(OperationLogs.class);
+        
+		//没有指定业务类型的时候根据方法名称判断
+		if(operationLogs.businessType().ordinal()==0){
+			setsetBusinessType(methodName, operationLogs, record);
+		}else{
+			record.setBusinessType(operationLogs.businessType().ordinal());
+		}
+		
+		// 没有指定业务名称的时候根据方法名称判断
+		if (StringUtils.isBlank(operationLogs.businessName())) {
+			setBusinessName(methodName,record);
+		} else {
+			record.setBusinessName(operationLogs.businessName());
+		}
+		
+		if(StringUtils.isBlank(operationLogs.businessRemarks())){
+			record.setBusinessRemarks(record.getBusinessRemarks()+",备注:"+operationLogs.businessRemarks());
+		}
+		
+		//手动指定了操作人
+		if(StringUtils.isNotBlank(operationLogs.operator())){
+			record.setCreator(operationLogs.operator());
+		} else {
+			//登录成功以后session才有效，所以pjp.proceed()后还需要执行一次
+			operator = operator == null ? (BaseEntity)request.getSession().getAttribute("currentUserLogin") : operator;
+			record.setCreator(operator !=null ? operator.getCreator() : "非登陆用户操作");
+		}
+		record.setCreateDate(new Date());
+		operationLogService.insert(record);
+		return obj;
+	}
+	
+	 /**
+     * @Desc 设置业务类型和名称 
+     * @param methodName
+     * @param operationLog
+     * @param record
+     * @author YY<2017年10月19日>
+     */
+	private void setsetBusinessType(String methodName, OperationLogs operationLog, OperationLog record) {
+		// 业务操作类型
+		if (methodName.startsWith("add")) {
+			record.setBusinessType(BusinessType.INSERT.ordinal());
+		}else if (methodName.startsWith("edit")) {
+			record.setBusinessType(BusinessType.UPDATE.ordinal());
+		}else if (methodName.startsWith("delete")) {
+			record.setBusinessType(BusinessType.DELETE.ordinal());
+		}else if (methodName.startsWith("grant")) {
+			record.setBusinessType(BusinessType.GRANT.ordinal());
+		}else if (methodName.startsWith("export")) {
+			record.setBusinessType(BusinessType.EXPORT.ordinal());
+		}else if (methodName.startsWith("import")) {
+			record.setBusinessType(BusinessType.EXPORT.ordinal());
+		}else if (methodName.startsWith("login")) {
+			record.setBusinessType(BusinessType.LOGIN.ordinal());
+		}else if (methodName.startsWith("logout")) {
+			record.setBusinessType(BusinessType.LOGOUT.ordinal());
+		}else if (methodName.startsWith("forbid")) {
+			record.setBusinessType(BusinessType.FORBID.ordinal());
+		}else {
+			record.setBusinessType(0);
+		}
+	}
+	
+	/**
+     * @Desc 设置业务名称 
+     * @param methodName
+     * @param operationLog
+     * @param record
+     * @author YY<2017年10月19日>
+     */
+	private void setBusinessName(String methodName,OperationLog record) {
+		// 业务操作类型
+		if (methodName.startsWith("add")) {
+			record.setBusinessName("新增");
+		}else if (methodName.startsWith("edit")) {
+			record.setBusinessName("更新");
+		}else if (methodName.startsWith("delete")) {
+			record.setBusinessName("删除");
+		}else if (methodName.startsWith("grant")) {
+			record.setBusinessName("授权");
+		}else if (methodName.startsWith("export")) {
+			record.setBusinessName("导出");
+		}else if (methodName.startsWith("import")) {
+			record.setBusinessName("导入");
+		}else if (methodName.startsWith("login")) {
+			record.setBusinessName("登录");
+		}else if (methodName.startsWith("logout")) {
+			record.setBusinessName("退出登录");
+		}else if (methodName.startsWith("forbid")) {
+			record.setBusinessName("禁止访问");
+		}else {
+			record.setBusinessName("");
+		}
+	}
+}

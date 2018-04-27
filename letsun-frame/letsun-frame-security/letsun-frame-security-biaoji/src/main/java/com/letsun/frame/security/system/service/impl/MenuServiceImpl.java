@@ -1,0 +1,193 @@
+/*
+ *Project: security
+ ****************************************************************
+ * 版权所有@2018 立信创源  保留所有权利.
+ ***************************************************************/
+package com.letsun.frame.security.system.service.impl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.letsun.frame.core.service.impl.BaseServiceImpl;
+import com.letsun.frame.security.system.domain.Function;
+import com.letsun.frame.security.system.domain.Menu;
+import com.letsun.frame.security.system.mapper.FunctionMapper;
+import com.letsun.frame.security.system.mapper.MenuMapper;
+import com.letsun.frame.security.system.mapper.RoleMenuMapper;
+import com.letsun.frame.security.system.service.MenuService;
+
+/**
+ * 
+ * @Author YY
+ * @Date <2018年03月13日>
+ * @version 1.0
+ */
+@Service
+public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implements MenuService {
+	
+	@Autowired private FunctionMapper functionMapper;
+	
+	@Autowired private RoleMenuMapper roleMenuMapper;
+	/**
+	 * 获取当前用户拥有的根菜单
+	 * 
+	 * @author YY<2017年8月19日>
+	 * @return
+	 */
+	@Override
+	public List<Menu> getRootMenuList(List<Menu> allMenus) {
+		List<Menu> rootMenus = new ArrayList<Menu>();
+		for (Menu menu : allMenus) {
+			boolean isRootMenu = !rootMenus.contains(menu) && (menu.getParentId() == 0L || menu.getParentId() == null);
+			if (isRootMenu) {
+				rootMenus.add(menu);
+			}
+		}
+		return rootMenus;
+	}
+
+	/**
+	 * @Desc 递归取子节点
+	 * @param menus
+	 * @param parentId
+	 * @return
+	 * @author YY<2017年10月23日>
+	 */
+	@Override
+	public List<Menu> getchildMenus(List<Menu> menus, Long parentId) {
+		List<Menu> childMenus = new ArrayList<Menu>();
+		if (menus != null && !menus.isEmpty()) {
+			Iterator<Menu> iterator = menus.iterator();
+			while(iterator.hasNext()){
+				Menu menu = iterator.next();
+				if (menu.getParentId().equals(parentId) && !childMenus.contains(menu)) {
+					childMenus.add(menu);
+					iterator.remove();
+				}
+			}
+			// 依据orderby排序
+			if (childMenus != null && !childMenus.isEmpty()) {
+				for (Menu menu : childMenus) {
+					menu.setChildren(getchildMenus(menus, menu.getId()));
+				}
+			}
+		}
+		return childMenus;
+	}
+
+	@Override
+	public boolean updateStatus(Long id, Integer status) {
+		return baseMapper.updateStatus(id,status) > 0;
+	}
+
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public boolean insertMenu(Menu entity) {
+		//如果是菜单，默认增加功能列表里面的默认功能
+		if(baseMapper.insert(entity) > 0 && entity.getType() == 0 && entity.getInitFunction() == 0){
+			List<Menu> menus = getmenus(entity);
+			if(menus !=null && !menus.isEmpty()){
+				insertBatch(menus);
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * 获取菜单默认新增的功能
+	 * @param entity
+	 * @return
+	 */
+	private List<Menu> getmenus(Menu menu){
+		String baseUrl = menu.getUrl().substring(0,menu.getUrl().lastIndexOf("/")+1);
+		List<Menu> menuFunctions = new ArrayList<Menu>();
+		Wrapper<Function> wrapper = new EntityWrapper<Function>();
+		wrapper.eq("type", 0);
+		wrapper.eq("status", 0);
+		List<Function> functions = functionMapper.selectList(wrapper);
+		if(functions !=null && !functions.isEmpty()){
+			for (Function function : functions) {
+				Menu menuFunction = new Menu();
+				menuFunction.setParentId(menu.getId());
+				menuFunction.setName(function.getName());
+				menuFunction.setUrl(baseUrl+function.getCode());
+				//类型：0菜单/1目录/2功能 
+				menuFunction.setType(2);
+				menuFunction.setLevel(menu.getLevel()+1);
+				menuFunction.setSource(1);
+				menuFunction.setStatus(0);
+				menuFunction.setCreator(menu.getCreator());
+				menuFunction.setCreateDate(new Date());
+				menuFunctions.add(menuFunction);
+			}
+		}
+		return menuFunctions;
+	}
+
+	@Override
+	public Menu findMenuById(Long id) {
+		return baseMapper.findMenuById(id);
+	}
+
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public boolean insertMenuFunctions(List<Menu> menuFunctions) {
+		if(menuFunctions !=null && !menuFunctions.isEmpty()){
+			Menu menu = baseMapper.selectById(menuFunctions.get(0).getParentId());
+			if(menu != null){
+				String baseUrl = menu.getUrl().substring(0,menu.getUrl().lastIndexOf("/")+1);
+				//删除菜单下面的所有功能(type==2)，这里做物理删除，不做逻辑删除
+				baseMapper.deleteByParentId(menu.getId(),2);
+				//过滤顶级功能菜单
+				menuFunctions = menuFunctions.stream().filter(menuFunction -> menuFunction.getFunctionId() != 0).collect(Collectors.toList());
+				menuFunctions.forEach(menuFunction -> {
+					Function function = functionMapper.selectById(menuFunction.getFunctionId());
+					menuFunction.setParentId(menu.getId());
+					menuFunction.setName(function.getName());
+					menuFunction.setUrl(baseUrl+function.getCode());
+					//类型：0菜单/1目录/2功能 
+					menuFunction.setType(2);
+					menuFunction.setLevel(menu.getLevel()+1);
+					menuFunction.setSource(0);
+					menuFunction.setStatus(0);
+					menuFunction.setCreator(menu.getCreator());
+					menuFunction.setCreateDate(new Date());
+				});
+				if(menuFunctions !=null && !menuFunctions.isEmpty()){
+					insertBatch(menuFunctions);
+				}
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public boolean deleteMenusById(Long id) {
+		//删除菜单，这里是逻辑删除
+		if(baseMapper.deleteById(id) > 0 ){
+			Wrapper<Menu> wrapper = new EntityWrapper<Menu>();
+			wrapper.eq("parent_id", id);
+			List<Menu> children = baseMapper.selectList(wrapper);
+			if(children !=null && !children.isEmpty()){
+				for (Menu menu : children) {
+					deleteMenusById(menu.getId());
+				}
+			}
+			//菜单被删除，删除角色拥有的菜单
+			roleMenuMapper.deleteByMenuId(id);
+		}
+		return true;
+	}
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.iwsct.itface.mapper.TvoteMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.iwsct.itface.domain.Tvote" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="optid" column="OPTID" jdbcType="BIGINT"/>
+	  	<result property="wxno" column="WXNO" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="corpid" column="CORPID" jdbcType="BIGINT"/>
+	  	<result property="creator" column="creator" jdbcType="VARCHAR"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+	  	<result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,optid,wxno,create_date,corpid,creator,modifier,modify_date,deleted
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.optid,A.wxno,A.create_date,A.corpid,A.creator,A.modifier,A.modify_date,A.deleted
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from t_vote A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',#{name},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

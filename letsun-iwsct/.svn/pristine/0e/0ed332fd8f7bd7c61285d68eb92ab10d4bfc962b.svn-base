@@ -1,0 +1,90 @@
+/*
+ *Project: iwsct
+ ****************************************************************
+ * 版权所有@2018 立信创源  保留所有权利.
+ ***************************************************************/
+package com.letsun.iwsct.itface.service.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.letsun.frame.core.service.impl.BaseServiceImpl;
+import com.letsun.iwsct.itface.domain.Tfans;
+import com.letsun.iwsct.itface.mapper.TfansMapper;
+import com.letsun.iwsct.itface.service.TfansService;
+
+/**
+ * Service实现类
+ * @Author generator
+ * @Date <2018年04月19日>
+ * @version 1.0
+ */
+@Service
+public class TfansServiceImpl extends BaseServiceImpl<TfansMapper,Tfans> implements TfansService{
+
+	@Override
+	public Integer getMyRankingForNum(Long corpid, Integer shopid,
+			Integer helpnum) {
+		// TODO Auto-generated method stub
+		if (helpnum == null) {
+			helpnum = 0;
+		}
+		
+		Wrapper<Tfans> wrapper = new EntityWrapper<Tfans>();
+
+		wrapper.ne("status", "0");
+		wrapper.eq("corpid", corpid);
+		wrapper.ge("helpnum", helpnum);
+
+		if (shopid != 0) {
+			wrapper.eq("shopid", shopid);
+		}
+
+		List<Tfans> list = this.selectList(wrapper);
+
+		if (list != null && list.size() > 0) {
+
+			return list.size();
+		} else {
+
+			return 0;
+		}
+	}
+
+	@Override
+	public Integer getMyRankingForCore(Long corpid, Integer shopid,
+			Integer core, Boolean excludeZero) {
+		// TODO Auto-generated method stub
+		
+		Wrapper<Tfans> wrapper = new EntityWrapper<Tfans>();
+
+		wrapper.ne("status", "0");
+		wrapper.eq("corpid", corpid);
+		wrapper.ge("helpscore", core);
+		if (excludeZero != null && excludeZero) {
+
+			wrapper.isNotNull("helpscore");
+			wrapper.gt("helpscore", 0);
+		}
+
+		if (shopid != 0) {
+			wrapper.eq("shopid", shopid);
+		}
+
+		List<Tfans> list = this.selectList(wrapper);
+
+		if (list != null && list.size() > 0) {
+			return list.size();
+		} else {
+			return 0;
+		}
+		
+	}
+	
+	
+	
+	
+}

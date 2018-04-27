@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>编辑</title>
+<th:block th:include="/common/layout/header" />
+<link rel="stylesheet"
+	href="/static/plugins/zTree/css/zTreeStyle/zTreeStyle.css"
+	type="text/css">
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit" method="post">
+		<input id="menu_id" type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">父级</label>
+			<div class="layui-input-block">
+				<input id="parentId" type="hidden" name="parentId"
+					th:value="${obj.parentId}" /> <input id="parentName" type="text"
+					class="layui-input" th:value="${obj.parentName}"
+					lay-verify="required" placeholder="请点击左侧树选择父级" disabled="disabled" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型</label>
+			<div class="layui-input-block">
+				<input type="radio" name="type" value="0" title="菜单"
+					th:checked="${obj.type == 0}" lay-filter="type"> <input
+					type="radio" name="type" value="1" title="目录"
+					th:checked="${obj.type == 1}" lay-filter="type">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" th:value="${obj.name}"
+					class="layui-input" lay-verify="required" placeholder="请输入名称" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">URL</label>
+			<div class="layui-input-block">
+				<input type="text" name="url" th:value="${obj.url}"
+					class="layui-input" lay-verify="required"
+					placeholder="请输入URL,目录输入#" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+				<input type="radio" name="status" value="0" title="启用"
+					th:checked="${obj.status == 0}"> <input type="radio"
+					name="status" value="1" title="禁用" th:checked="${obj.status == 1}">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit=""
+					lay-filter="layui-form-submit-btn">提交</button>
+				<button id="layui-form-cancel-btn" type="button"
+					class="layui-btn layui-btn-primary">取消</button>
+			</div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

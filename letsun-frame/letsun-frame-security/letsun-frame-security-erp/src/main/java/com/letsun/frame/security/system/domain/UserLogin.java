@@ -1,0 +1,83 @@
+/*
+ *Project: security
+ ****************************************************************
+ * 版权所有@2018 立信创源  保留所有权利.
+ ***************************************************************/
+package com.letsun.frame.security.system.domain;
+
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.letsun.frame.core.domain.BaseEntity;
+
+/**
+ *  
+ * @Author YY 
+ * @Date <2018年03月13日>
+ * @version 1.0
+ */
+@TableName("sys_user_login")
+public class UserLogin extends BaseEntity{
+	private static final long serialVersionUID = 1L;
+	
+	/** 用户ID */		
+	private Long userId;
+	/** 登录源编码:数据字典(PLATFORM:平台,QQ,WEIXIN:微信) */		
+	private String originCode;
+	/** 登录账号 */		
+	private String account;
+	/** 登录密码 */		
+	private String password;
+	/** 用户信息 */
+	@TableField(exist=false)
+	private User user;
+	
+	public void setUserId(Long value) {
+		this.userId = value;
+	}	
+	public Long getUserId() {
+		return this.userId;
+	}
+	public void setOriginCode(String value) {
+		this.originCode = value;
+	}	
+	public String getOriginCode() {
+		return this.originCode;
+	}
+	public void setAccount(String value) {
+		this.account = value;
+	}	
+	public String getAccount() {
+		return this.account;
+	}
+	public void setPassword(String value) {
+		this.password = value;
+	}	
+	public String getPassword() {
+		return this.password;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+			.append("id",getId())
+			.append("userId",getUserId())
+			.append("originCode",getOriginCode())
+			.append("account",getAccount())
+			.append("password",getPassword())
+			.append("deleted",getDeleted())
+			.append("creator",getCreator())
+			.append("createDate",getCreateDate())
+			.append("modifier",getModifier())
+			.append("modifyDate",getModifyDate())
+			.toString();
+	}
+}

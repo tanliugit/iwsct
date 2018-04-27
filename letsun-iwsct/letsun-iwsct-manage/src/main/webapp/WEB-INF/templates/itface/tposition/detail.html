@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<div class="layui-form-item">
+			<label class="layui-form-label">POSITIONID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.positionid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CORPID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.corpid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">ORGID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.orgid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">职位名称</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.positionname}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">描述</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.content}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.remarks}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">1:正常，2：禁用，0:删除（其他）</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.status}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CREATECORP</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.createcorp}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">AREAID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.areaid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信图片地址</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.logourl}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

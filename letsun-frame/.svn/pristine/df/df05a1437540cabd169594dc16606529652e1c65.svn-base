@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="add" method="post">
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" class="layui-input" lay-verify="required" placeholder="请输入名称"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">编码</label>
+			<div class="layui-input-block">
+				<input type="text" name="code" class="layui-input" lay-verify="required" placeholder="请输入功能编码"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型</label>
+			<div class="layui-input-block">
+				<input type="radio" name="type" value="0" title="通用功能" checked="checked">
+				<input type="radio" name="type" value="1" title="专属功能" >
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+				<input type="radio" name="status" value="0" title="启用" checked="checked">
+				<input type="radio" name="status" value="1" title="禁用">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

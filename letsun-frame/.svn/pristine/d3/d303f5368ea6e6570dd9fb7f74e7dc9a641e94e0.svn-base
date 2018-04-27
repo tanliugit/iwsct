@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--公共头部-->
+	<th:block th:include="/common/layout/header" />
+	<!--公共头部结束-->
+	<title>功能管理</title>
+</head>
+<body class="childrenBody">
+	 <blockquote class="layui-elem-quote">
+		<!-- 表单 start -->
+        <form class="layui-form">
+            <div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">名称</label>
+					<div class="layui-input-inline" style="width: 178px;">
+						<input type="text" name="name" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">状态</label>
+					<div class="layui-input-inline" style="width: 178px;">
+						<select name="status">
+							<option value="">请选择</option>
+							<option value="0">启用</option>
+							<option value="1">禁用</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">来源</label>
+					<div class="layui-input-inline" style="width: 178px;">
+						<select name="source">
+							<option value="">请选择</option>
+							<option value="0">管理增加</option>
+							<option value="1">系统初始化</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+			    	<button onclick="return $.table.search();"  class="layui-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+					<button onclick="return $.dialog.openSimple('新增','add',600, 350);"  class="layui-btn layui-btn-normal"><i class="layui-icon">&#xe654;</i>新增</button>
+				</div>
+			 </div>
+         </form>
+         <!-- 表单 end -->
+	</blockquote>
+	 <!-- 表格 start -->
+  	<table class="layui-table lxcy-table-con" lay-data="{url:'/system/function/list',page:true, id:'layui-table'}" lay-filter="layui-table-filter">
+		<thead>
+			<tr>
+				<th lay-data="{field:'index', width:70,templet:'#indexTpl'}">序号</th>
+				<th lay-data="{field:'name'}">名称</th>
+				<th lay-data="{field:'code'}">功能编码</th>
+				<th lay-data="{field:'type',templet:'#typeTpl'}">类型</th>
+				<th lay-data="{field:'status',templet:'#statusTpl'}">状态</th>
+				<th lay-data="{field:'source',templet:'#sourceTpl'}">来源</th>
+				<th lay-data="{fixed: 'right', width:175, align:'center', toolbar: '#operationBar'}">操作</th>
+			</tr>
+		</thead>
+	</table>
+	<script type="text/html" id="operationBar">
+		<a class="layui-btn layui-btn-xs" lay-event="detail?width=600&amp;height=350">查看</a>
+  		{{#  if(d.source == 0 ){ }}
+    		<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit?width=600&amp;height=350">编辑</a>
+  			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  		{{#  } }}
+	</script>
+	<script type="text/html" id="indexTpl">
+        {{d.LAY_TABLE_INDEX+1}}
+    </script>
+	<script type="text/html" id="typeTpl">
+		{{#  if(d.type == 0 ){ }}
+    		通用功能
+  		{{#  } else { }}
+    		专属功能
+  		{{#  } }}
+	</script>
+	<script type="text/html" id="statusTpl">
+		<input id="{{d.id}}" type="checkbox" name="status" value="{{d.status}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statusSwitch" {{ d.status == 0 ? 'checked' : '' }} />
+	</script>
+	<script type="text/html" id="sourceTpl">
+		{{#  if(d.source == 0 ){ }}
+    		<a class="layui-btn  layui-btn-primary layui-btn-xs layui-btn-radius">管理员增加</a>
+  		{{#  } else { }}
+    		<a class="layui-btn  layui-btn-primary layui-btn-xs layui-btn-radius">系统初始化</a>
+  		{{#  } }}
+	</script>
+	<!-- 表格 end -->
+	
+	<!-- 共用JS start -->
+<th:block th:include="/common/layout/footJs" />
+<script src="/static/scripts/system/user.js" charset="utf-8"></script>
+<!-- 共用JS end -->
+</body>
+</html>

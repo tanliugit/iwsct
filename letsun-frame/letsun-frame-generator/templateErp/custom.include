@@ -1,0 +1,5 @@
+<#-- 本文件包含一些自定义的公共变量 -->
+<#assign className = table.className>
+<#assign classNameFirstLower = table.classNameFirstLower>
+<#assign classNameLowerCase = table.classNameLowerCase>
+<#assign ignoreAttributes = ["id","deleted", "creator", "createDate", "modifier", "modifyDate"]>

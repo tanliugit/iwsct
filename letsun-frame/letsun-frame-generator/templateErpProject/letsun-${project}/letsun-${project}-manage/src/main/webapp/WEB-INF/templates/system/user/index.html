@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--公共头部-->
+	<th:block th:include="/common/layout/header" />
+	<!--公共头部结束-->
+	<title>用户管理</title>
+</head>
+<body class="childrenBody">
+	 <blockquote class="layui-elem-quote">
+		<!-- 表单 start -->
+        <form class="layui-form">
+            <div class="layui-form-item">
+			    <div class="layui-inline">
+			      <label class="layui-form-label">账号</label>
+			      <div class="layui-input-inline">
+			        <input type="text" name="account"  class="layui-input">
+			      </div>
+			    </div>
+			    <div class="layui-inline">
+			      <label class="layui-form-label">姓名</label>
+			      <div class="layui-input-inline">
+			        <input type="text" name="name"  class="layui-input">
+			      </div>
+			    </div>
+			    <div class="layui-inline">
+			    	<button onclick="return $.table.search();"  class="layui-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+					<button onclick="return $.dialog.openSimple('新增','add',700, 420);"  class="layui-btn layui-btn-normal"><i class="layui-icon">&#xe654;</i>新增</button>
+				</div>
+			 </div>
+         </form>
+         <!-- 表单 end -->
+	</blockquote>
+	 <!-- 表格 start -->
+  	<table class="layui-table lxcy-table-con" lay-data="{url:'/system/user/list',page:true, id:'layui-table'}" lay-filter="layui-table-filter">
+    	<thead>
+        	<tr>
+            	<th lay-data="{field:'index', width:70,templet:'#indexTpl'}">序号</th>
+                <th lay-data="{field:'account'}">账号</th>
+                <th lay-data="{field:'name'}">姓名</th>
+                <th lay-data="{field:'email'}">邮箱</th>
+                <th lay-data="{field:'mobile'}">手机</th>
+                <th lay-data="{field:'status',templet: '#statusTpl', unresize: true}">用户状态</th>
+                <th lay-data="{field:'createDateTimeStr'}">时间</th>
+                <th lay-data="{fixed: 'right', width:200, align:'center', toolbar: '#operationBar'}">操作</th>
+             </tr>
+         </thead>
+     </table>
+     <script type="text/html" id="operationBar">
+		{{#  if(d.type == 1 ){ }}
+    		<a class="layui-btn layui-btn-xs">超级用户禁止操作</a>
+  		{{#  } else { }}
+			<a class="layui-btn layui-btn-xs" lay-event="grant?width=500&amp;height=350">授权</a>
+    		<a class="layui-btn layui-btn-xs" lay-event="detail?width=700&amp;height=425">查看</a>
+ 			<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit?width=700&amp;height=420">编辑</a>
+  			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  		{{#  } }}
+	</script>
+    <script type="text/html" id="indexTpl">
+        {{d.LAY_TABLE_INDEX+1}}
+    </script>
+    <script type="text/html" id="statusTpl">
+		{{#  if(d.type == 1 ){ }}
+    		<input id="{{d.id}}" type="checkbox" name="status" value="{{d.status}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statusSwitch" checked="checked" disabled="disabled"/>
+  		{{#  } else { }}
+    		<input id="{{d.id}}" type="checkbox" name="status" value="{{d.status}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statusSwitch" {{ d.status == 0 ? 'checked' : '' }} />
+  		{{#  } }}
+	</script>
+<!-- 共用JS start -->
+<th:block th:include="/common/layout/footJs" />
+<script src="/static/scripts/system/user.js" charset="utf-8"></script>
+<!-- 共用JS end -->
+</body>
+</html>

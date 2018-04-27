@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit">
+		<input type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">选项ID</label>
+			<div class="layui-input-block">
+				<input type="text" name="optid" th:value="${obj.optid}" class="layui-input"  placeholder="请输入选项ID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信号</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxno" th:value="${obj.wxno}" class="layui-input"  placeholder="请输入微信号"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">corpid</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" th:value="${obj.corpid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

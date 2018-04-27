@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="add" method="post">
+		<div class="layui-form-item">
+		    <label class="layui-form-label">父级角色</label>
+		    <div class="layui-input-block">
+		      <select name="parentId" lay-filter="aihao" disabled="disabled">
+				<th:block th:each="role,iterStat:${roleList}">
+				 	<option th:value="${role.id}" th:text="${role.name}"></option>
+				</th:block>
+		      </select>
+		    </div>
+	    </div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" class="layui-input" lay-verify="required" placeholder="请输入姓名"/>
+			</div>
+		</div>
+		<input type="hidden" name="type" value="0">
+		<div class="layui-form-item">
+	   	 	<label class="layui-form-label">状态</label>
+	    	<div class="layui-input-block">
+		      	<input type="radio" name="status" value="0" title="启用" checked="checked">
+		      	<input type="radio" name="status" value="1" title="禁用">
+	    	</div>
+	    </div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

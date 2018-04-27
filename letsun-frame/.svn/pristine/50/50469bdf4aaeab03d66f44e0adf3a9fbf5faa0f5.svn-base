@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+	<link rel="stylesheet" href="/static/plugins/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+</head>
+<body>
+	<div class="layui-container" style="background-color:white;">
+		  <div class="layui-row">
+		    <div class="layui-col-xs3"">
+		    	<div style="height:300px;overflow:auto;">
+		    		<ul id="menuTree" class="ztree"></ul>
+		    	</div>
+		    </div>
+		    <div class="layui-col-xs9">
+		      	<form class="layui-form layui-form-pane" action="add" method="post">
+		      		<div class="layui-form-item">
+						<label class="layui-form-label">父级</label>
+						<div class="layui-input-block">
+							<input id="parentId" type="hidden" name="parentId" value="0"/>
+							<input id="parentName" type="text" class="layui-input" lay-verify="required" placeholder="请点击左侧树选择父级" disabled="disabled"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">类型</label>
+						<div class="layui-input-block">
+					      	<input type="radio" name="type" value="0" title="菜单" checked="checked" lay-filter="type">
+					      	<input type="radio" name="type" value="1" title="目录"  lay-filter="type">
+				    	</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="name" class="layui-input" lay-verify="required" placeholder="请输入名称"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">URL</label>
+						<div class="layui-input-block">
+							<input type="text" name="url" class="layui-input" lay-verify="required" placeholder="请输入URL,目录输入#"/>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">状态</label>
+						<div class="layui-input-block">
+					      	<input type="radio" name="status" value="0" title="启用" checked="checked">
+					      	<input type="radio" name="status" value="1" title="禁用">
+				    	</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">初始化功能</label>
+						<div class="layui-input-block">
+					      	<input type="radio" name="initFunction" value="0" title="是" checked="checked">
+					      	<input type="radio" name="initFunction" value="1" title="否">
+				    	</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+						     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+						     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+						 </div>
+					</div>
+				</form>
+		    </div>
+		  </div>
+ 	 </div>
+	<th:block th:include="/common/layout/footJs" />
+	<script type="text/javascript" src="/static/plugins/zTree/js/jquery.ztree.core.min.js"></script>
+	<script type="text/javascript" src="/static/plugins/zTree/js/jquery.ztree.excheck.min.js"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onClick: function(event, treeId, treeNode){
+					$("#parentId").val(treeNode.id);
+					$("#parentName").val(treeNode.name);
+				}
+			}
+		};
+		var zTreeObj;
+		$(document).ready(function(){
+			zTreeObj = $.fn.zTree.init($("#menuTree"), setting,  [[${ztrees}]]);
+		});
+	/*]]>*/
+	</script>
+</body>
+</html>

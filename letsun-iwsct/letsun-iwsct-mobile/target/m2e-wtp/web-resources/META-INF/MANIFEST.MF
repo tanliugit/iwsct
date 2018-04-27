@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: letsun-iwsct-mobile
+Implementation-Version: 0.0.1
+Built-By: Administrator
+Implementation-Vendor-Id: com.letsun.iwsct
+Build-Jdk: 1.8.0_131
+Implementation-URL: http://projects.spring.io/spring-boot/letsun-biaoj
+ i-parent/letsun-iwsct/letsun-iwsct-mobile/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

@@ -1,0 +1,230 @@
+/*
+ *Project: security
+ ****************************************************************
+ * 版权所有@2018 立信创源  保留所有权利.
+ ***************************************************************/
+package com.letsun.frame.security.system.controller;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.letsun.frame.core.common.lang.annotation.OperationLog;
+import com.letsun.frame.core.common.lang.enums.EnumType.BusinessType;
+import com.letsun.frame.core.domain.Message;
+import com.letsun.frame.core.domain.Ztree;
+import com.letsun.frame.security.common.controller.BaseAdminController;
+import com.letsun.frame.security.system.domain.Role;
+import com.letsun.frame.security.system.domain.User;
+import com.letsun.frame.security.system.domain.UserRole;
+import com.letsun.frame.security.system.service.RoleIService;
+import com.letsun.frame.security.system.service.UserIService;
+import com.letsun.frame.security.system.service.UserRoleIService;
+
+/**
+ *  
+ * @Author YY 
+ * @Date <2018年03月13日>
+ * @version 1.0
+ */
+@Controller
+@RequestMapping("/system/user/")
+public class UserController extends BaseAdminController {
+	
+	@Autowired private UserIService userService;
+	
+	@Autowired private RoleIService roleService;
+	
+	@Autowired private UserRoleIService userRoleService;
+	
+	
+	/**
+	 * @Desc 首页
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@RequestMapping("index")
+	public String index() {
+		return "/system/user/index";
+	}	
+	
+	/**
+	 * @Desc 列表
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@ResponseBody
+	@RequestMapping("list")
+	public  Map<String, Object> search(User entity, Integer page,Integer limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name", entity.getName());
+		map.put("account", entity.getAccount());
+		return toLayuiList(userService.selectComplex(map , page, limit));
+	}
+	
+	/**
+	 * @Desc 新增 
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@RequestMapping(value="add",method = RequestMethod.GET)
+	public String add() {
+		return "/system/user/add";
+	}	
+	
+	/**
+	 * @Desc 新增保存 
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@ResponseBody
+	@RequestMapping(value="add",method = RequestMethod.POST)
+	@OperationLog(businessType=BusinessType.INSERT,businessName="新增")
+	public Message addSave(User entity){
+		entity.setCreator(getLoginUser().getAccount());
+		entity.setCreateDate(new Date());
+		return userService.insertUser(entity) ? Message.success("操作成功") : Message.error("操作失败");
+	}
+	
+	/**
+	 * @Desc 编辑 
+	 * @param id
+	 * @param mmap
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@RequestMapping(value="edit",method = RequestMethod.GET)
+	public String edit(Long id, ModelMap mmap){
+		//通用封装方法单表查询
+		//mmap.put("obj", userService.selectById(id));
+		//自定义多表关联查询
+		mmap.put("obj", userService.findUserById(id));
+		return "/system/user/edit";
+	}
+	
+	/**
+	 * @Desc 编辑保存 
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@ResponseBody
+	@RequestMapping(value="edit",method = RequestMethod.POST)
+	@OperationLog(businessType=BusinessType.UPDATE,businessName="更新")
+	public Message editSave(User entity){
+		entity.setModifier(getLoginUser().getAccount());
+		entity.setModifyDate(new Date());
+		return userService.updateUser(entity) ? Message.success("操作成功") : Message.error("操作失败");
+	}	
+	
+	/**
+	 * @Desc 查看
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@RequestMapping("detail")
+	public String detail(Long id, ModelMap mmap){
+		mmap.put("obj", userService.findUserById(id));
+		return "/system/user/detail";
+	}
+	 
+	/**
+	 * @Desc 删除 
+	 * @param id
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@ResponseBody
+	@RequestMapping("delete")
+	@OperationLog(businessType=BusinessType.DELETE,businessName="删除")
+	public Message delete(Long id){
+		return userService.deleteById(id) ? Message.success("操作成功") : Message.error("操作失败");		
+	}
+	
+	/**
+	 * @Desc 修改状态
+	 * @param id
+	 * @return
+	 * @author YY<2017年10月17日>
+	 */
+	@ResponseBody
+	@RequestMapping("status")
+	@OperationLog(businessType=BusinessType.UPDATE,businessName="修改状态")
+	public Message status(Long id,Integer status){
+		return userService.updateStatus(id,status) ? Message.success("操作成功") : Message.error("操作失败");		
+	}
+	
+	/**
+	 * @Desc 授权
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@RequestMapping(value="grant",method = RequestMethod.GET)
+	public String grant(Long id,ModelMap mmap) {
+		EntityWrapper<Role> wrapper = new EntityWrapper<Role>();
+		wrapper.eq("status",0);
+		wrapper.eq("deleted",0);
+		List<Role> roles = roleService.selectList(wrapper);
+		User user = userService.findUserRoleById(id);
+		List<Ztree> ztrees = new ArrayList<Ztree>();
+		for (Role role : roles) {
+			ztrees.add(initZtree(role,user));
+		}
+		mmap.addAttribute("userId", id);
+		mmap.addAttribute("ztrees", ztrees);
+		return "/system/user/grant";
+	}	
+	
+	/**
+	 * 将角色转Ztree需要的结构
+	 * @param userId
+	 * @param role
+	 * @return
+	 */
+	private Ztree initZtree(Role role,User user) {
+		Ztree ztree = new Ztree();
+		ztree.setId(role.getId());
+		ztree.setpId(role.getParentId());
+		ztree.setName(role.getName());
+		ztree.setOpen(true);
+		if(role.getParentId() ==0){
+			ztree.setNocheck(true);
+		}
+		if (user != null && user.getRoles() != null) {
+			for (Role myRole : user.getRoles()) {
+				if (role.getId() == myRole.getId()) {
+					ztree.setChecked(true);
+					break;
+				}
+			}
+		}
+		return ztree;
+	}
+
+	/**
+	 * @Desc 授权保存 
+	 * @return
+	 * @author YY<2018年01月01日>
+	 */
+	@ResponseBody
+	@RequestMapping(value="grant",method = RequestMethod.POST)
+	@OperationLog(businessType=BusinessType.INSERT,businessName="授权")
+	public Message grantSave(@RequestBody List<UserRole> userRoles){
+		for (UserRole userRole : userRoles) {
+			userRole.setDeleted(0);
+			userRole.setCreator(getLoginUser().getAccount());
+			userRole.setCreateDate(new Date());
+		}
+		return userRoleService.insertUserRoles(userRoles) ? Message.success("操作成功") : Message.error("操作失败");
+	}
+}

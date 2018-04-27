@@ -1,0 +1,10 @@
+<#include "/javadoc_source.include">
+package ${basepackage}.${projectName}.${moduleName}.mapper;
+
+import ${basepackage}.${projectName}.${moduleName}.domain.${className};
+import com.letsun.frame.core.mapper.BaseMapper;
+
+<#include "/javadoc_class.include">
+public interface ${className}Mapper extends BaseMapper<${className}> {
+
+}

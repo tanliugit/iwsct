@@ -1,0 +1,23 @@
+<#include "/custom.include">
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<#list table.columns as column>
+		<#if !ignoreAttributes?seq_contains(column.columnNameLower)>
+		<div class="layui-form-item">
+			<label class="layui-form-label">${column.remarks!''}</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${r'${obj.'}${column.columnNameLower}}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		</#if>
+		</#list>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

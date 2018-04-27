@@ -1,0 +1,15 @@
+<#include "/javadoc_source.include">
+package ${basepackage}.${projectName}.${moduleName}.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import ${basepackage}.${projectName}.${moduleName}.domain.${className};
+import ${basepackage}.${projectName}.${moduleName}.mapper.${className}Mapper;
+import ${basepackage}.${projectName}.${moduleName}.service.${className}Service;
+import com.letsun.frame.core.service.impl.BaseServiceImpl;
+
+<#include "/javadoc_class.include">
+@Service
+public class ${className}ServiceImpl extends BaseServiceImpl<${className}Mapper,${className}> implements ${className}Service{
+	
+}

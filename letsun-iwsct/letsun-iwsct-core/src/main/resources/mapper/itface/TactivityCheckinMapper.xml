@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.iwsct.itface.mapper.TactivityCheckinMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.iwsct.itface.domain.TactivityCheckin" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="name" column="NAME" jdbcType="VARCHAR"/>
+	  	<result property="starttime" column="STARTTIME" jdbcType="VARCHAR"/>
+	  	<result property="endtime" column="ENDTIME" jdbcType="VARCHAR"/>
+	  	<result property="isflag" column="ISFLAG" jdbcType="INTEGER"/>
+	  	<result property="lotterypassword" column="LOTTERYPASSWORD" jdbcType="VARCHAR"/>
+	  	<result property="status" column="STATUS" jdbcType="INTEGER"/>
+	  	<result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+	  	<result property="corpid" column="CORPID" jdbcType="BIGINT"/>
+	  	<result property="orgid" column="ORGID" jdbcType="BIGINT"/>
+	  	<result property="creator" column="CREATOR" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+	  	<result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,name,starttime,endtime,isflag,lotterypassword,status,remark,corpid,orgid,creator,create_date,modifier,modify_date,deleted
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.name,A.starttime,A.endtime,A.isflag,A.lotterypassword,A.status,A.remark,A.corpid,A.orgid,A.creator,A.create_date,A.modifier,A.modify_date,A.deleted
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from t_activity_checkin A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',#{name},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

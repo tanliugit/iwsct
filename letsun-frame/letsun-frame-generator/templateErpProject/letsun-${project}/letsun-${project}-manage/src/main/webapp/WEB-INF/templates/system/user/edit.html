@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit" method="post">
+		<input type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">账号</label>
+			<div class="layui-input-block">
+				<input type="text" name="account" th:value="${obj.account}" class="layui-input" lay-verify="required" placeholder="请输入账号" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">密码</label>
+			<div class="layui-input-block">
+				<input type="hidden"  name="oldPwd" th:value="${obj.password}"/>
+				<input type="password" name="password" th:value="${obj.password}" class="layui-input" lay-verify="required" placeholder="请输入密码"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">姓名</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" th:value="${obj.name}" class="layui-input" lay-verify="required" placeholder="请输入姓名"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">手机</label>
+			<div class="layui-input-block">
+				<input type="text" name="mobile" th:value="${obj.mobile}" class="layui-input" lay-verify="required|phone" placeholder="请输入手机"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱</label>
+			<div class="layui-input-block">
+				<input type="text" name="email" th:value="${obj.email}" class="layui-input" lay-verify="required|email" placeholder="请输入邮箱"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+	   	 	<label class="layui-form-label">用户状态</label>
+	    	<div class="layui-input-block"  th:if="${obj.status==0}">
+		      	<input type="radio" name="status" value="0" title="启用" checked="checked">
+		      	<input type="radio" name="status" value="1" title="禁用">
+	    	</div>
+	    	<div class="layui-input-block"  th:if="${obj.status==1}">
+		      	<input type="radio" name="status" value="0" title="启用">
+		      	<input type="radio" name="status" value="1" title="禁用" checked="checked">
+	    	</div>
+	    </div>
+
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

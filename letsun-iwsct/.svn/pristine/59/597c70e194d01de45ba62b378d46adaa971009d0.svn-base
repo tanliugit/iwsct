@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit">
+		<input type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">name</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" th:value="${obj.name}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">lotteryid</label>
+			<div class="layui-input-block">
+				<input type="text" name="lotteryid" th:value="${obj.lotteryid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">抽奖概率</label>
+			<div class="layui-input-block">
+				<input type="text" name="probability" th:value="${obj.probability}" class="layui-input"  placeholder="请输入抽奖概率"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">奖品等级</label>
+			<div class="layui-input-block">
+				<input type="text" name="level" th:value="${obj.level}" class="layui-input"  placeholder="请输入奖品等级"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">已中奖数</label>
+			<div class="layui-input-block">
+				<input type="text" name="total" th:value="${obj.total}" class="layui-input"  placeholder="请输入已中奖数"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">奖品数量</label>
+			<div class="layui-input-block">
+				<input type="text" name="maxsum" th:value="${obj.maxsum}" class="layui-input"  placeholder="请输入奖品数量"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">每天中奖数设置</label>
+			<div class="layui-input-block">
+				<input type="text" name="daysum" th:value="${obj.daysum}" class="layui-input"  placeholder="请输入每天中奖数设置"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">详细描述</label>
+			<div class="layui-input-block">
+				<input type="text" name="contents" th:value="${obj.contents}" class="layui-input"  placeholder="请输入详细描述"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">remark</label>
+			<div class="layui-input-block">
+				<input type="text" name="remark" th:value="${obj.remark}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">图片路径</label>
+			<div class="layui-input-block">
+				<input type="text" name="picurl" th:value="${obj.picurl}" class="layui-input"  placeholder="请输入图片路径"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">1：实物，2：积分</label>
+			<div class="layui-input-block">
+				<input type="text" name="type" th:value="${obj.type}" class="layui-input"  placeholder="请输入1：实物，2：积分"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">设置积分</label>
+			<div class="layui-input-block">
+				<input type="text" name="score" th:value="${obj.score}" class="layui-input"  placeholder="请输入设置积分"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

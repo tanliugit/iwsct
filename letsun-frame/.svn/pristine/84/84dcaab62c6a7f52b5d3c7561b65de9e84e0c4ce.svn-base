@@ -1,0 +1,65 @@
+<#include "/custom.include">
+<!DOCTYPE html>
+<html>
+<head>
+	<!--公共头部-->
+	<th:block th:include="/common/layout/header" />
+	<!--公共头部结束-->
+	<title>标题</title>
+</head>
+<body class="childrenBody">
+	 <blockquote class="layui-elem-quote">
+		<!-- 表单 start -->
+        <form class="layui-form">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">名称</label>
+					<div class="layui-input-inline">
+						<input type="text" name="name" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">状态</label>
+					<div class="layui-input-inline">
+						<select name="status">
+							<option value="">请选择</option>
+							<option value="0">启用</option>
+							<option value="1">禁用</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+						<button onclick="return $.table.search();" class="layui-btn">
+							<i class="layui-icon">&#xe615;</i>搜索
+						</button>
+						<button onclick="return $.dialog.openSimple('新增','add',800, 430);" class="layui-btn layui-btn-normal">
+							<i class="layui-icon">&#xe654;</i>新增
+						</button>
+				</div>
+			</div>
+		</form>
+         <!-- 表单 end -->
+	</blockquote>
+	 <!-- 表格 start -->
+  	<table class="layui-table" lay-data="{url:'/system/menu/list',page:true, id:'layui-table'}" lay-filter="layui-table-filter">
+    	<thead>
+        	 <tr>
+				<th lay-data="{field:'index', width:70,templet:'#indexTpl'}">序号</th>
+				<#list table.columns as column>
+				<#if !ignoreAttributes?seq_contains(column.columnNameLower)>
+				<th lay-data="{field:'${column.columnNameLower}'}">${column.remarks!''}</th>
+				</#if>
+				</#list>
+				<th lay-data="{fixed: 'right', width:175, align:'center', toolbar: '#operationBar'}">操作</th>
+			 </tr>
+         </thead>
+     </table>
+	 <script type="text/html" id="indexTpl">
+         {{d.LAY_TABLE_INDEX+1}}
+     </script>
+<!-- 共用JS start -->
+<th:block th:include="/common/layout/footJs" />
+<script src="/static/scripts/system/menu.js" charset="utf-8"></script>
+<!-- 共用JS end -->
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit">
+		<input type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">NAME</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" th:value="${obj.name}" class="layui-input" lay-verify="required" placeholder="请输入NAME"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CORPID</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" th:value="${obj.corpid}" class="layui-input" lay-verify="required" placeholder="请输入CORPID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">ORGID</label>
+			<div class="layui-input-block">
+				<input type="text" name="orgid" th:value="${obj.orgid}" class="layui-input" lay-verify="required" placeholder="请输入ORGID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微刊链接</label>
+			<div class="layui-input-block">
+				<input type="text" name="url" th:value="${obj.url}" class="layui-input" lay-verify="required" placeholder="请输入微刊链接"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问总人数</label>
+			<div class="layui-input-block">
+				<input type="text" name="visitpsum" th:value="${obj.visitpsum}" class="layui-input" lay-verify="required" placeholder="请输入访问总人数"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问总次数</label>
+			<div class="layui-input-block">
+				<input type="text" name="visitsum" th:value="${obj.visitsum}" class="layui-input" lay-verify="required" placeholder="请输入访问总次数"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">1:正常，2：禁用，0:删除（其他）</label>
+			<div class="layui-input-block">
+				<input type="text" name="status" th:value="${obj.status}" class="layui-input" lay-verify="required" placeholder="请输入1:正常，2：禁用，0:删除（其他）"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">REMARK</label>
+			<div class="layui-input-block">
+				<input type="text" name="remark" th:value="${obj.remark}" class="layui-input" lay-verify="required" placeholder="请输入REMARK"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">分享次数统计</label>
+			<div class="layui-input-block">
+				<input type="text" name="sharesum" th:value="${obj.sharesum}" class="layui-input" lay-verify="required" placeholder="请输入分享次数统计"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

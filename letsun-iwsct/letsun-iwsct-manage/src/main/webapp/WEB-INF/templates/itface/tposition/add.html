@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="add">
+		<div class="layui-form-item">
+			<label class="layui-form-label">POSITIONID</label>
+			<div class="layui-input-block">
+				<input type="text" name="positionid" class="layui-input" lay-verify="required" placeholder="请输入POSITIONID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CORPID</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" class="layui-input"  placeholder="请输入CORPID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">ORGID</label>
+			<div class="layui-input-block">
+				<input type="text" name="orgid" class="layui-input"  placeholder="请输入ORGID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">职位名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="positionname" class="layui-input"  placeholder="请输入职位名称"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">描述</label>
+			<div class="layui-input-block">
+				<input type="text" name="content" class="layui-input"  placeholder="请输入描述"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<input type="text" name="remarks" class="layui-input"  placeholder="请输入备注"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">1:正常，2：禁用，0:删除（其他）</label>
+			<div class="layui-input-block">
+				<input type="text" name="status" class="layui-input"  placeholder="请输入1:正常，2：禁用，0:删除（其他）"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CREATECORP</label>
+			<div class="layui-input-block">
+				<input type="text" name="createcorp" class="layui-input"  placeholder="请输入CREATECORP"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">AREAID</label>
+			<div class="layui-input-block">
+				<input type="text" name="areaid" class="layui-input"  placeholder="请输入AREAID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信图片地址</label>
+			<div class="layui-input-block">
+				<input type="text" name="logourl" class="layui-input"  placeholder="请输入微信图片地址"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

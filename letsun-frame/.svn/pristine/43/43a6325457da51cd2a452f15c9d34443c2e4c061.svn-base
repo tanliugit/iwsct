@@ -1,0 +1,27 @@
+<div class="navBar layui-side-scroll" id="navBar">
+	<ul class="layui-nav layui-nav-tree">
+		<th:block th:each="menu,iterStat:${rootMenus}">
+			<li  th:class="${(menu.id == parentId or (parentId == null and iterStat.first)) ? 'layui-nav-item layui-nav-itemed' : 'layui-nav-item' }" ">
+				<a href="javascript:;">
+					<i class="layui-icon" data-icon=""></i><cite th:text="${menu.name}"></cite>
+				</a>
+				 <th:block th:each="child,iterStat2:${menu.children}">
+					<dl class="layui-nav-child lxcy-nav-child">
+						<th:block th:switch="${child.id == childId or (childId == null and iterStat.first and iterStat2.first)}">
+							<dd th:case="true" class="layui-this">
+								<a href="javascript:;" th:attr="data-url=${child.url}+'?parentId='+${child.parentId}+'&amp;childId='+${child.id}">
+									<i th:class="'iconfont '+${child.icon}" th:attr="data-icon=${child.icon}"></i><cite th:text="${child.name}"></cite>
+								</a>
+							</dd>
+							<dd th:case="false">
+								<a href="javascript:;" th:attr="data-url=${child.url}+'?parentId='+${child.parentId}+'&amp;childId='+${child.id}">
+									<i th:class="'iconfont '+${child.icon}" th:attr="data-icon=${child.icon}"></i><cite th:text="${child.name}"></cite>
+								</a>
+							</dd>
+						</th:block>
+					</dl>
+				 </th:block>
+			</li>
+		</th:block>
+	</ul>
+</div>

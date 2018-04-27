@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit">
+		<input type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">活动ID</label>
+			<div class="layui-input-block">
+				<input type="text" name="activityid" th:value="${obj.activityid}" class="layui-input" lay-verify="required" placeholder="请输入活动ID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">签到人ID</label>
+			<div class="layui-input-block">
+				<input type="text" name="fansid" th:value="${obj.fansid}" class="layui-input" lay-verify="required" placeholder="请输入签到人ID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">论记录信息</label>
+			<div class="layui-input-block">
+				<input type="text" name="remark" th:value="${obj.remark}" class="layui-input"  placeholder="请输入论记录信息"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">1:上墙，2：禁用，3:删除（其他）</label>
+			<div class="layui-input-block">
+				<input type="text" name="status" th:value="${obj.status}" class="layui-input"  placeholder="请输入1:上墙，2：禁用，3:删除（其他）"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">corpid</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" th:value="${obj.corpid}" class="layui-input" lay-verify="required" placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">orgid</label>
+			<div class="layui-input-block">
+				<input type="text" name="orgid" th:value="${obj.orgid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">lastedittime</label>
+			<div class="layui-input-block">
+				<input type="text" name="lastedittime" th:value="${obj.lastedittime}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

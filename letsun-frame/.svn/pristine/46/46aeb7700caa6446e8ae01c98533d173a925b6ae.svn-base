@@ -1,0 +1,38 @@
+<#include "/custom.include">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="${basepackage}.${projectName}.${moduleName}.mapper.${className}Mapper" >
+    <resultMap id="ResultMapBase" type="${basepackage}.${projectName}.${moduleName}.domain.${className}" >
+  	 <#list table.columns as column>
+	  	<#if column.pk>
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<#else>
+	  	<result property="${column.columnNameLower}" column="${column.sqlName}" jdbcType="${column.jdbcType?upper_case}"/>
+	  	</#if>   
+	 </#list>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		<#list table.columns as column>${column.sqlName?lower_case}<#if column_has_next>,</#if></#list>
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		<#list table.columns as column>A.${column.sqlName?lower_case}<#if column_has_next>,</#if></#list>
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from ${table.sqlName} A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',${r'#{name}'},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

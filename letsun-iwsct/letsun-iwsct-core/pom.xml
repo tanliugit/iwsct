@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.letsun.iwsct</groupId>
+    <artifactId>letsun-iwsct</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  <artifactId>letsun-iwsct-core</artifactId>
+  <packaging>war</packaging>
+  <dependencies>
+  	<dependency>
+		<groupId>com.gif4j</groupId>
+		<artifactId>gif4j</artifactId>
+		<version>1.0.2</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.drewnoakes</groupId>
+	    <artifactId>metadata-extractor</artifactId>
+	  	<version>2.8.1</version>
+	</dependency>
+	
+		<dependency>
+			<groupId>hyxt</groupId>
+			<artifactId>hyxt-qr</artifactId>
+			<version>5.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/hyxt-qr-5.2.jar</systemPath>
+		
+		</dependency>
+  </dependencies>
+</project>

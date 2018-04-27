@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit">
+		<input type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">微刊URL</label>
+			<div class="layui-input-block">
+				<input type="text" name="url" th:value="${obj.url}" class="layui-input"  placeholder="请输入微刊URL"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">粉丝ID</label>
+			<div class="layui-input-block">
+				<input type="text" name="fansid" th:value="${obj.fansid}" class="layui-input"  placeholder="请输入粉丝ID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CORPID</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" th:value="${obj.corpid}" class="layui-input"  placeholder="请输入CORPID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">ORGID</label>
+			<div class="layui-input-block">
+				<input type="text" name="orgid" th:value="${obj.orgid}" class="layui-input"  placeholder="请输入ORGID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">统计类型：1:URL，2：点击，3:（其他）</label>
+			<div class="layui-input-block">
+				<input type="text" name="type" th:value="${obj.type}" class="layui-input"  placeholder="请输入统计类型：1:URL，2：点击，3:（其他）"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问IP</label>
+			<div class="layui-input-block">
+				<input type="text" name="visitip" th:value="${obj.visitip}" class="layui-input"  placeholder="请输入访问IP"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问次数</label>
+			<div class="layui-input-block">
+				<input type="text" name="visitsum" th:value="${obj.visitsum}" class="layui-input"  placeholder="请输入访问次数"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">访问时间</label>
+			<div class="layui-input-block">
+				<input type="text" name="visittime" th:value="${obj.visittime}" class="layui-input"  placeholder="请输入访问时间"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

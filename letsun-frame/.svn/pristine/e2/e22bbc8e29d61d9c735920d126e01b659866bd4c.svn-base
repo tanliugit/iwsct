@@ -1,0 +1,85 @@
+package com.letsun.frame.security.common.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.letsun.frame.core.controller.BaseController;
+import com.letsun.frame.security.system.domain.Menu;
+import com.letsun.frame.security.system.domain.Role;
+import com.letsun.frame.security.system.domain.UserLogin;
+import com.letsun.frame.security.system.service.MenuService;
+
+
+/**
+ * @Desc Controller基类
+ * @author YY<2017年10月11日>
+ */
+@Controller
+public class BaseAdminController extends BaseController{
+	
+	@Autowired private MenuService menuService;
+	
+	@ModelAttribute
+	public void init(ModelMap mmp) {
+		if(getLoginUser() != null && getLoginUser().getUser() != null){
+			List<Role> rolesList = getLoginUser().getUser().getRoles();
+			List<Menu> allMenus = new ArrayList<Menu>();
+			if(rolesList !=null && !rolesList.isEmpty()){
+				for (Role role : rolesList) {
+					//只取菜单和目录，过滤功能
+					Stream<Menu> stream = role.getMenus().stream().filter(menu -> (menu.getType() == 0 || menu.getType() == 1));
+					allMenus.addAll(stream.collect(Collectors.toList()));
+				}
+			}
+			//获取父节点为0的根节点
+			List<Menu> rootMenus = menuService.getRootMenuList(allMenus);
+			mmp.put("rootMenus", rootMenus);
+
+			String rootId = getRequest().getParameter("rootId");
+			if(StringUtils.isNotEmpty(rootId)){
+				mmp.put("rootId", Long.parseLong(rootId));
+				Menu parentMenu = null;
+				for (Menu rootMenu : rootMenus) {
+					if(rootMenu.getId() ==  Long.parseLong(rootId)){
+						parentMenu = rootMenu;
+						break;
+					}
+				}
+				List<Menu> childMenus =  menuService.getchildMenus(allMenus, Long.parseLong(rootId));
+				parentMenu.setChildren(childMenus);
+				List<Menu> parentMenus = new ArrayList<Menu>();
+				parentMenus.add(parentMenu);
+				//左侧菜单
+				mmp.put("childMenus", parentMenus);
+				
+				String parentId = getRequest().getParameter("parentId");
+				if(StringUtils.isNotEmpty(parentId)){
+					mmp.put("parentId", Long.parseLong(parentId));
+				}
+				String childId = getRequest().getParameter("childId");
+				if(StringUtils.isNotEmpty(childId)){
+					mmp.put("childId", Long.parseLong(childId));
+				}
+			}
+		}
+	}
+
+	/**
+	 * @Desc 获取后台用户登录信息
+	 * @return
+	 * @author YY<2017年10月23日>
+	 */
+	public UserLogin getLoginUser() {
+		return (UserLogin) SecurityUtils.getSubject().getSession().getAttribute("currentUserLogin");
+	}
+	
+}

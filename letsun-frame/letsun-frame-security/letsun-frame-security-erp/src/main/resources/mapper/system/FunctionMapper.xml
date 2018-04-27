@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.frame.security.system.mapper.FunctionMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.frame.security.system.domain.Function" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="name" column="name" jdbcType="VARCHAR"/>
+	  	<result property="code" column="code" jdbcType="VARCHAR"/>
+	  	<result property="type" column="type" jdbcType="BIT"/>
+	  	<result property="source" column="source" jdbcType="BIT"/>
+	  	<result property="orderby" column="orderby" jdbcType="INTEGER"/>
+	  	<result property="status" column="status" jdbcType="BIT"/>
+	  	<result property="deleted" column="deleted" jdbcType="BIT"/>
+	  	<result property="creator" column="creator" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,name,code,type,source,orderby,status,deleted,creator,create_date,modifier,modify_date
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.name,A.code,A.type,A.source,A.orderby,A.status,A.deleted,A.creator,A.create_date,A.modifier,A.modify_date
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from sys_function A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',#{name},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

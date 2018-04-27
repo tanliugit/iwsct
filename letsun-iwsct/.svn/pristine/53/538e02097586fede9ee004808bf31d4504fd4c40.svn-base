@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>编辑</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="edit">
+		<input type="hidden" name="id" th:value="${obj.id}" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">fansid</label>
+			<div class="layui-input-block">
+				<input type="text" name="fansid" th:value="${obj.fansid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">lafansid</label>
+			<div class="layui-input-block">
+				<input type="text" name="lafansid" th:value="${obj.lafansid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">shopid</label>
+			<div class="layui-input-block">
+				<input type="text" name="shopid" th:value="${obj.shopid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">corpid</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" th:value="${obj.corpid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">orgid</label>
+			<div class="layui-input-block">
+				<input type="text" name="orgid" th:value="${obj.orgid}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">status</label>
+			<div class="layui-input-block">
+				<input type="text" name="status" th:value="${obj.status}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">remark</label>
+			<div class="layui-input-block">
+				<input type="text" name="remark" th:value="${obj.remark}" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

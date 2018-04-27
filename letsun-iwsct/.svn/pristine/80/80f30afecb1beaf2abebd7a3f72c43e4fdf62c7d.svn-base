@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+	<head>
+	    <meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta name="format-detection" content="telephone=no">
+		<title></title>
+		
+		<style type="text/css">
+			html,body {margin:0px;height:100%; background:#FFF;}
+			*html{background-image:url(about:blank);background-attachment:fixed;}
+			img {border:0;outline:none;}
+			a{ text-decoration: none; color:#4a4a4a; outline:none;}
+			a:hover{text-decoration:none; color:#666; outline:none;}
+			body{font-family:"microsoft yahei";font-size:14px;line-height: 20px; color:#4a4a4a;}
+			.loadingBox{position:absolute;top:50%;left:50%;margin-left:-45px;margin-top:-50px;text-align:center;}
+			.loading{width:50px;height:50px;background-size:50px 50px;margin:0 auto;}
+		</style>
+</head>
+   <body>
+    <div class="loadingBox">
+		<div class="loading"></div>
+		<p></p>
+	</div>
+</body>
+
+<th:block th:include="/getWxJsApSign" />
+<script type="text/javascript"  th:inline="javascript">
+	wxJs.setPrefix([[${SYSURL}]]);
+	var corpid = [[${corpid}]];
+	var openid = [[${wxno}]];
+	var isAuthorize = true;
+	var nickname=[[${nickname}]];
+	var headimgurl=[[${headimgurl}]];
+
+	//是否请求授权
+	if([[${isAuthorize}]]==0){
+		isAuthorize =false;
+	}
+	
+	var isWxBrowser = wxJs.isWeixin();
+	//微信浏览器登陆 先 获取wxno  设置客户
+	if(isWxBrowser){
+		if(!openid){
+			getOnlyOpenidForCorpid(corpid,isAuthorize,function(data){
+				openid=data.openid;
+				nickname=data.nickname;
+				headimgurl=data.headimgurl;
+				
+				if(openid == null || openid == undefined){
+					alert("微信不给力,请重新打开页面！");
+					return;
+				}else{
+					debugger;
+					var newUrl=[[${SYSURL}]]+"/w/crossDomain/"+[[${corpid}]]+"?signid="+[[${signid}]]+"&isAuthorize="+[[${isAuthorize}]]+"&isSubscribe="+[[${isSubscribe}]]+"&wk_requestUrl="+[[${wk_requestUrl}]]+"&wxno="+openid;
+					//是否请求授权
+					if([[${isAuthorize}]]==0){
+						newUrl+='&nickname='+encodeURI(encodeURI(nickname));
+						newUrl+='&headimgurl='+headimgurl;
+					}
+					window.location.replace(newUrl);
+				}
+			});
+		}else{
+			var newUrl=[[${wk_requestUrl}]];
+			if(newUrl.lastIndexOf('?')>0){
+				newUrl+="&";
+			}
+			if(newUrl.lastIndexOf('?')==-1){
+				newUrl+="?";
+			}
+			
+			
+			newUrl+="fansid="+[[${fans.fansid}]]+"&mytoken="+[[${mytoken}]]+"&wx="+openid;
+			
+			//是否请求授权
+			if([[${isAuthorize}]]==0){
+				newUrl+="&nickname="+[[${nickname}]]+"&photo="+[[${headimgurl}]]+"";
+			}
+
+			//是否签到成功标志
+		    newUrl+="&isSign="+[[${isSign}]];
+		    
+		   //是否签到成功标志
+		    newUrl+="&subscribe="+[[${isSubscribe}]];
+			
+			//alert(newUrl);
+			window.location.replace(newUrl);
+		}
+	}else{
+		alert("请使用微信访问！");
+	}
+</script>
+</html>

@@ -1,0 +1,10 @@
+<#include "/javadoc_source.include">
+package ${basepackage}.${projectName}.${moduleName}.service;
+
+import ${basepackage}.${projectName}.${moduleName}.domain.${className};
+import com.letsun.frame.core.service.BaseIService;
+
+<#include "/javadoc_class.include">
+public interface ${className}IService extends BaseIService<${className}>{
+	
+}

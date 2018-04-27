@@ -1,0 +1,128 @@
+/*
+ *Project: iwsct
+ ****************************************************************
+ * 版权所有@2018 立信创源  保留所有权利.
+ ***************************************************************/
+package com.letsun.iwsct.base.domain;
+
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.letsun.frame.core.domain.BaseEntity;
+
+/**
+ *  
+ * @Author YY 
+ * @Date <2018年04月17日>
+ * @version 1.0
+ */
+@TableName("t_position")
+public class Tposition extends BaseEntity{
+	private static final long serialVersionUID = 1L;
+	
+	/** POSITIONID */		
+	private Long positionid;
+	/** CORPID */		
+	private Long corpid;
+	/** ORGID */		
+	private Long orgid;
+	/** 职位名称 */		
+	private String positionname;
+	/** 描述 */		
+	private String content;
+	/** 备注 */		
+	private String remarks;
+	/** 1:正常，2：禁用，0:删除（其他） */		
+	private Integer status;
+	/** CREATECORP */		
+	private Long createcorp;
+	/** AREAID */		
+	private Long areaid;
+	/** 微信图片地址 */		
+	private String logourl;
+	
+	public void setPositionid(Long value) {
+		this.positionid = value;
+	}	
+	public Long getPositionid() {
+		return this.positionid;
+	}
+	public void setCorpid(Long value) {
+		this.corpid = value;
+	}	
+	public Long getCorpid() {
+		return this.corpid;
+	}
+	public void setOrgid(Long value) {
+		this.orgid = value;
+	}	
+	public Long getOrgid() {
+		return this.orgid;
+	}
+	public void setPositionname(String value) {
+		this.positionname = value;
+	}	
+	public String getPositionname() {
+		return this.positionname;
+	}
+	public void setContent(String value) {
+		this.content = value;
+	}	
+	public String getContent() {
+		return this.content;
+	}
+	public void setRemarks(String value) {
+		this.remarks = value;
+	}	
+	public String getRemarks() {
+		return this.remarks;
+	}
+	public void setStatus(Integer value) {
+		this.status = value;
+	}	
+	public Integer getStatus() {
+		return this.status;
+	}
+	public void setCreatecorp(Long value) {
+		this.createcorp = value;
+	}	
+	public Long getCreatecorp() {
+		return this.createcorp;
+	}
+	public void setAreaid(Long value) {
+		this.areaid = value;
+	}	
+	public Long getAreaid() {
+		return this.areaid;
+	}
+	public void setLogourl(String value) {
+		this.logourl = value;
+	}	
+	public String getLogourl() {
+		return this.logourl;
+	}
+	
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+			.append("id",getId())
+			.append("positionid",getPositionid())
+			.append("corpid",getCorpid())
+			.append("orgid",getOrgid())
+			.append("positionname",getPositionname())
+			.append("content",getContent())
+			.append("remarks",getRemarks())
+			.append("status",getStatus())
+			.append("creator",getCreator())
+			.append("createDate",getCreateDate())
+			.append("modifier",getModifier())
+			.append("modifyDate",getModifyDate())
+			.append("createcorp",getCreatecorp())
+			.append("areaid",getAreaid())
+			.append("logourl",getLogourl())
+			.append("deleted",getDeleted())
+			.toString();
+	}
+}

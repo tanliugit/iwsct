@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--公共头部-->
+	<th:block th:include="/common/layout/header" />
+	<!--公共头部结束-->
+	<title>错误日志管理</title>
+</head>
+<body class="childrenBody">
+	 <blockquote class="layui-elem-quote">
+		<!-- 表单 start -->
+        <form class="layui-form">
+            <div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">请求URL</label>
+					<div class="layui-input-inline">
+						<input type="text" name="requestUrl" class="layui-input" />
+					</div>
+				</div>
+				<div class="layui-inline">
+			    	<button onclick="return $.table.search();"  class="layui-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+				</div>
+			 </div>
+         </form>
+         <!-- 表单 end -->
+	</blockquote>
+	 <!-- 表格 start -->
+  	<table class="layui-table lxcy-table-con" lay-data="{url:'/system/errorLog/list',page:true, id:'layui-table'}" lay-filter="layui-table-filter">
+		<thead>
+			<tr>
+				<th lay-data="{field:'index', width:70,templet:'#indexTpl'}">序号</th>
+				<th lay-data="{field:'errorCode'}">错误代码</th>
+				<th lay-data="{field:'requestUrl'}">请求URL</th>
+				<th lay-data="{field:'params'}">请求参数</th>
+				<th lay-data="{field:'message'}">错误信息</th>
+				<th lay-data="{field:'createDateTimeStr'}">操作时间</th>
+				<th
+					lay-data="{fixed: 'right', width:175, align:'center', toolbar: '#operationBar'}">操作</th>
+			</tr>
+		</thead>
+	</table>
+	<script type="text/html" id="indexTpl">
+        {{d.LAY_TABLE_INDEX+1}}
+    </script>
+	<script type="text/html" id="operationBar">
+  		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+	</script>
+	<!-- 表格 end -->
+	
+	<!-- 共用JS start -->
+<th:block th:include="/common/layout/footJs" />
+<script src="/static/scripts/system/user.js" charset="utf-8"></script>
+<!-- 共用JS end -->
+</body>
+</html>

@@ -1,0 +1,299 @@
+/*
+ *Project: iwsct
+ ****************************************************************
+ * 版权所有@2018 立信创源  保留所有权利.
+ ***************************************************************/
+package com.letsun.iwsct.base.domain;
+
+import java.util.Date;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.letsun.frame.core.domain.BaseEntity;
+
+/**
+ *  
+ * @Author YY 
+ * @Date <2018年04月17日>
+ * @version 1.0
+ */
+@TableName("t_corp")
+public class Tcorp extends BaseEntity{
+	private static final long serialVersionUID = 1L;
+	
+	/** ID */		
+	private Long corpid;
+	/** 名称 */		
+	private String name;
+	/** 类型 */		
+	private Integer type;
+	/** enckey */		
+	private String enckey;
+	/** token */		
+	private String token;
+	/** viewno */		
+	private Long viewno;
+	/** 开始时间 */		
+	private Date startdate;
+	/** 结束时间 */		
+	private Date enddate;
+	/** 设置时间 */		
+	private Date settledate;
+	/** 联系人 */		
+	private String linkman;
+	/** 手机 */		
+	private String phone;
+	/** 邮箱 */		
+	private String email;
+	/** 联系方式 */		
+	private String contact;
+	/** 地址 */		
+	private String address;
+	/** 状态 */		
+	private Integer status;
+	/** 备注 */		
+	private String remark;
+	/** storeCorpId */		
+	private String storecorpid;
+	/** storeCorpKey */		
+	private String storecorpkey;
+	/** CREATEORG */		
+	private Long createorg;
+	/** CREATECORP */		
+	private Long createcorp;
+	/** WXICON */		
+	private String wxicon;
+	/** WXNAME */		
+	private String wxname;
+	/** WXID */		
+	private String wxid;
+	/** WXAPPID */		
+	private String wxappid;
+	/** WXAPPSECRET */		
+	private String wxappsecret;
+	/** 微信请求获取access_token */		
+	private String wxaccesstoken;
+	/** 微信请求获取jsapi_ticket */		
+	private String wxjsapiticket;
+	/** access_token对应的时间戳 */		
+	private Long wxtokenstamp;
+	/** jsapi_ticket对应的时间戳 */		
+	private Long wxticketstamp;
+	
+	public void setCorpid(Long value) {
+		this.corpid = value;
+	}	
+	public Long getCorpid() {
+		return this.corpid;
+	}
+	public void setName(String value) {
+		this.name = value;
+	}	
+	public String getName() {
+		return this.name;
+	}
+	public void setType(Integer value) {
+		this.type = value;
+	}	
+	public Integer getType() {
+		return this.type;
+	}
+	public void setEnckey(String value) {
+		this.enckey = value;
+	}	
+	public String getEnckey() {
+		return this.enckey;
+	}
+	public void setToken(String value) {
+		this.token = value;
+	}	
+	public String getToken() {
+		return this.token;
+	}
+	public void setViewno(Long value) {
+		this.viewno = value;
+	}	
+	public Long getViewno() {
+		return this.viewno;
+	}
+	public void setStartdate(Date value) {
+		this.startdate = value;
+	}	
+	public Date getStartdate() {
+		return this.startdate;
+	}
+	public void setEnddate(Date value) {
+		this.enddate = value;
+	}	
+	public Date getEnddate() {
+		return this.enddate;
+	}
+	public void setSettledate(Date value) {
+		this.settledate = value;
+	}	
+	public Date getSettledate() {
+		return this.settledate;
+	}
+	public void setLinkman(String value) {
+		this.linkman = value;
+	}	
+	public String getLinkman() {
+		return this.linkman;
+	}
+	public void setPhone(String value) {
+		this.phone = value;
+	}	
+	public String getPhone() {
+		return this.phone;
+	}
+	public void setEmail(String value) {
+		this.email = value;
+	}	
+	public String getEmail() {
+		return this.email;
+	}
+	public void setContact(String value) {
+		this.contact = value;
+	}	
+	public String getContact() {
+		return this.contact;
+	}
+	public void setAddress(String value) {
+		this.address = value;
+	}	
+	public String getAddress() {
+		return this.address;
+	}
+	public void setStatus(Integer value) {
+		this.status = value;
+	}	
+	public Integer getStatus() {
+		return this.status;
+	}
+	public void setRemark(String value) {
+		this.remark = value;
+	}	
+	public String getRemark() {
+		return this.remark;
+	}
+	public void setStorecorpid(String value) {
+		this.storecorpid = value;
+	}	
+	public String getStorecorpid() {
+		return this.storecorpid;
+	}
+	public void setStorecorpkey(String value) {
+		this.storecorpkey = value;
+	}	
+	public String getStorecorpkey() {
+		return this.storecorpkey;
+	}
+	public void setCreateorg(Long value) {
+		this.createorg = value;
+	}	
+	public Long getCreateorg() {
+		return this.createorg;
+	}
+	public void setCreatecorp(Long value) {
+		this.createcorp = value;
+	}	
+	public Long getCreatecorp() {
+		return this.createcorp;
+	}
+	public void setWxicon(String value) {
+		this.wxicon = value;
+	}	
+	public String getWxicon() {
+		return this.wxicon;
+	}
+	public void setWxname(String value) {
+		this.wxname = value;
+	}	
+	public String getWxname() {
+		return this.wxname;
+	}
+	public void setWxid(String value) {
+		this.wxid = value;
+	}	
+	public String getWxid() {
+		return this.wxid;
+	}
+	public void setWxappid(String value) {
+		this.wxappid = value;
+	}	
+	public String getWxappid() {
+		return this.wxappid;
+	}
+	public void setWxappsecret(String value) {
+		this.wxappsecret = value;
+	}	
+	public String getWxappsecret() {
+		return this.wxappsecret;
+	}
+	public void setWxaccesstoken(String value) {
+		this.wxaccesstoken = value;
+	}	
+	public String getWxaccesstoken() {
+		return this.wxaccesstoken;
+	}
+	public void setWxjsapiticket(String value) {
+		this.wxjsapiticket = value;
+	}	
+	public String getWxjsapiticket() {
+		return this.wxjsapiticket;
+	}
+	public void setWxtokenstamp(Long value) {
+		this.wxtokenstamp = value;
+	}	
+	public Long getWxtokenstamp() {
+		return this.wxtokenstamp;
+	}
+	public void setWxticketstamp(Long value) {
+		this.wxticketstamp = value;
+	}	
+	public Long getWxticketstamp() {
+		return this.wxticketstamp;
+	}
+	
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+			.append("id",getId())
+			.append("corpid",getCorpid())
+			.append("name",getName())
+			.append("type",getType())
+			.append("enckey",getEnckey())
+			.append("token",getToken())
+			.append("viewno",getViewno())
+			.append("startdate",getStartdate())
+			.append("enddate",getEnddate())
+			.append("settledate",getSettledate())
+			.append("linkman",getLinkman())
+			.append("phone",getPhone())
+			.append("email",getEmail())
+			.append("contact",getContact())
+			.append("address",getAddress())
+			.append("status",getStatus())
+			.append("remark",getRemark())
+			.append("storecorpid",getStorecorpid())
+			.append("storecorpkey",getStorecorpkey())
+			.append("creator",getCreator())
+			.append("createDate",getCreateDate())
+			.append("modifier",getModifier())
+			.append("modifyDate",getModifyDate())
+			.append("createorg",getCreateorg())
+			.append("createcorp",getCreatecorp())
+			.append("wxicon",getWxicon())
+			.append("wxname",getWxname())
+			.append("wxid",getWxid())
+			.append("wxappid",getWxappid())
+			.append("wxappsecret",getWxappsecret())
+			.append("wxaccesstoken",getWxaccesstoken())
+			.append("wxjsapiticket",getWxjsapiticket())
+			.append("wxtokenstamp",getWxtokenstamp())
+			.append("wxticketstamp",getWxticketstamp())
+			.append("deleted",getDeleted())
+			.toString();
+	}
+}

@@ -1,0 +1,84 @@
+package com.letsun.frame.core.common.utils;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Enumeration;
+
+public class WebToolUtils {
+	
+	/**
+	 * @Desc 获取本地IP地址 
+	 * @return
+	 * @author YY<2017年11月17日>
+	 */
+	public static String getLocalIP(){
+		if (isWindowsOS()) {
+			try {
+				return InetAddress.getLocalHost().getHostAddress();
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}
+		}
+		return getLinuxLocalIp();
+	}
+
+	/**
+	 * @Desc 判断操作系统是否是Windows 
+	 * @return
+	 * @author YY<2017年11月17日>
+	 */
+	public static boolean isWindowsOS() {
+		boolean isWindowsOS = false;
+		String osName = System.getProperty("os.name");
+		if (osName.toLowerCase().indexOf("windows") > -1) {
+			isWindowsOS = true;
+		}
+		return isWindowsOS;
+	}
+
+	/**
+	 * @Desc 获取本地Host名称 
+	 * @return
+	 * @throws UnknownHostException
+	 * @author YY<2017年11月17日>
+	 */
+	public static String getLocalHostName(){
+		try {
+			return InetAddress.getLocalHost().getHostName();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * @Desc 获取Linux下的IP地址 
+	 * @return
+	 * @author YY<2017年11月17日>
+	 */
+	private static String getLinuxLocalIp(){
+		String ip = "";
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+				NetworkInterface intf = en.nextElement();
+				String name = intf.getName();
+				if (!name.contains("docker") && !name.contains("lo")) {
+					for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+						InetAddress inetAddress = enumIpAddr.nextElement();
+						if (!inetAddress.isLoopbackAddress()) {
+							String ipaddress = inetAddress.getHostAddress().toString();
+							if (!ipaddress.contains("::") && !ipaddress.contains("0:0:") && !ipaddress.contains("fe80")) {
+								ip = ipaddress;
+							}
+						}
+					}
+				}
+			}
+		} catch (SocketException ex) {
+			ip = "127.0.0.1";
+		}
+		return ip;
+	}
+}

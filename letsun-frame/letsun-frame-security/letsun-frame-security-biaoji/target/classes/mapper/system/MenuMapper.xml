@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.frame.security.system.mapper.MenuMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.frame.security.system.domain.Menu" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+	  	<result property="parentName" column="parent_name" jdbcType="VARCHAR"/>
+	  	<result property="name" column="name" jdbcType="VARCHAR"/>
+	  	<result property="url" column="url" jdbcType="VARCHAR"/>
+	  	<result property="icon" column="icon" jdbcType="VARCHAR"/>
+	  	<result property="isopen" column="isopen" jdbcType="BIT"/>
+	  	<result property="type" column="type" jdbcType="BIT"/>
+	  	<result property="level" column="level" jdbcType="BIT"/>
+	  	<result property="source" column="source" jdbcType="BIT"/>
+	  	<result property="status" column="status" jdbcType="BIT"/>
+	  	<result property="orderby" column="orderby" jdbcType="INTEGER"/>
+	  	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	  	<result property="deleted" column="deleted" jdbcType="BIT"/>
+	  	<result property="creator" column="creator" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,parent_id,name,url,icon,isopen,type,level,source,status,orderby,remark,deleted,creator,create_date,modifier,modify_date
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.parent_id,B.name AS parent_name,A.name,A.url,A.icon,A.isopen,A.type,A.level,A.source,A.status,A.orderby,A.remark,A.deleted,A.creator,A.create_date,A.modifier,A.modify_date
+	</sql>
+	
+	<sql id="BaseColumnMenuRole">
+		A.id,A.parent_id,A.name,A.url,A.icon,A.isopen,A.type,A.level,A.source,A.status,A.orderby,A.remark,A.deleted,A.creator,A.create_date,A.modifier,A.modify_date
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from sys_menu A
+	 	left join sys_menu B on A.parent_id = B.id
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			A.type != 2 AND A.deleted = 0
+			<if test="name !=null and name != ''">
+				AND A.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="status !=null">
+				AND A.status = #{status}
+			</if>
+			<if test="source !=null">
+				AND A.source = #{source}
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 通过ID查询菜单 -->
+	<select id="findMenuById" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from sys_menu A
+	 	left join sys_menu B on A.parent_id = B.id
+	 	where A.id = #{id}
+	</select>
+	
+	 <!-- 通过角色ID查询菜单 -->
+	<select id="findMenusByRoleId" resultMap="ResultMapBase">
+		select <include refid="BaseColumnMenuRole"/>
+		from sys_menu A
+		left join sys_role_menu B on A.id = B.menu_id
+		where A.status = 0 and B.role_id = #{roleId}
+	</select>
+</mapper>

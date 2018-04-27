@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<div class="layui-form-item">
+			<label class="layui-form-label">fansid</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.fansid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">NAME</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.name}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">PASSWORD</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.password}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXNO</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.wxno}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">SCORE</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.score}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">SHOPID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.shopid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CORPID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.corpid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">ORGID</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.orgid}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">STATUS</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.status}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">ADDRESS</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.address}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">TELEPHONE</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.telephone}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">AGE</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.age}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">SEX</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.sex}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">REMARK</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.remark}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CONTACTS</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.contacts}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">PHOTOURL</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.photourl}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">NICKNAME</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.nickname}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">目前工作岗位</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.currentjob}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">工作年限</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.worklonger}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.email}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">游戏总分值</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.helpscore}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">游戏好友助力人数</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.helpnum}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

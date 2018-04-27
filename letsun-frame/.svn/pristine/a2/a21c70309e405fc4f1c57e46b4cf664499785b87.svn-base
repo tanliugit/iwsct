@@ -1,0 +1,26 @@
+<div class="layui-side lxcy-side" id="js-lxcySide">
+	<div class="lxcy-side-top">
+		<i class="lxcy-toggle" id="js-showBody"></i>
+	</div>
+	<div class="layui-side-scroll lxcy-side-scroll">
+		<ul class="layui-nav layui-nav-tree lxcy-nav-tree">
+			<th:block th:each="menu,iterStat:${childMenus}">
+				<li  class="layui-nav-item layui-nav-itemed lxcy-nav-item layui-this">
+					<a href="javascript:void(0);"><i th:class="'iconfont '+${menu.icon}+' lxcy-icon'"></i><span th:text="${menu.name}"></span></a>
+					<th:block th:each="child,iterStat2:${menu.children}">
+						<dl class="layui-nav-child lxcy-nav-child">
+							<th:block th:switch="${child.id == childId or (childId == null and iterStat.first and iterStat2.first)}">
+								<dd th:case="true" class="layui-this">
+									<a th:href="${child.url}+'?rootId='+${rootId}+'&amp;parentId='+${child.parentId}+'&amp;childId='+${child.id}"><i th:class="'iconfont '+${child.icon}+' lxcy-icon'"></i><span th:text="${child.name}"></span></a>
+								</dd>
+							    <dd th:case="false">
+									<a th:href="${child.url}+'?rootId='+${rootId}+'&amp;parentId='+${child.parentId}+'&amp;childId='+${child.id}"><i th:class="'iconfont '+${child.icon}+' lxcy-icon'"></i><span th:text="${child.name}"></span></a>
+								</dd>
+						   </th:block>
+						</dl>
+				    </th:block>
+				</li>
+			</th:block>
+		</ul>
+	</div>
+</div>

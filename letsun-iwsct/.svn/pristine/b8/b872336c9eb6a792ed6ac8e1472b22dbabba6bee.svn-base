@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--公共头部-->
+<th:block th:include="/common/layout/header" />
+<!--公共头部结束-->
+<title>页面标题</title>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin lxcy-layout-admin">
+   	 <!--头部导航菜单 start-->
+	<th:block th:include="/common/layout/topNav" />
+   	<!--头部导航菜单 end-->
+
+    <div class="layui-fluid lxcy-fluid">
+         <!-- 左侧导航菜单 start -->
+		<th:block th:include="/common/layout/leftNav" />
+		 <!-- 左侧导航菜单 end -->
+
+        <!-- 内容主体区域 start -->
+        <div class="layui-body lxcy-body" id="js-lxcyBody">
+            <!-- 面包屑导航 start -->
+            <div class="bread-nav">
+                <i class="layui-icon lxcy-icon">&#xe68e;</i>
+                                       当前位置：<span class="layui-breadcrumb" lay-separator=">"><a>系统管理</a><a>权限管理</a><a>菜单管理</a>
+				</span>
+            </div>
+            <!-- 面包屑导航 end -->
+
+            <div class="lxcy-container">
+                <i class="lxcy-toggle" id="js-showLeftNav"></i>
+                <!-- 自定义内容区域 start -->
+                <div class="record-center-container">
+                    <!-- 表单 start -->
+                   <form  class="layui-form layui-form-pane">
+					  <div class="layui-form-item">
+						  <div class="layui-inline">
+						    <label class="layui-form-label">名称</label>
+						    <div class="layui-input-inline" style="width: 178px;">
+						      <input type="text" name="name"  class="layui-input"/>
+						    </div>
+						  </div>
+						  <div class="layui-inline">
+						    <label class="layui-form-label">状态</label>
+						   	<div class="layui-input-inline" style="width: 178px;">
+						       <select name="status">
+						        <option value="">请选择</option>
+						        <option value="0">启用</option>
+						        <option value="1">禁用</option>
+						       </select>
+						    </div>
+						  </div>
+						  <div class="layui-inline">
+						    <label class="layui-form-label">来源</label>
+						   	<div class="layui-input-inline" style="width: 178px;">
+						       <select name="source">
+						        <option value="">请选择</option>
+						        <option value="0">管理增加</option>
+						       	<option value="1">系统初始化</option>
+						       </select>
+						    </div>
+						  </div>
+						  <button onclick="return $.table.search();"  class="layui-btn"><i class="layui-icon">&#xe615;</i>搜索</button>
+						  <button onclick="return $.dialog.openSimple('新增','add',800, 430);"  class="layui-btn layui-btn-normal"><i class="layui-icon">&#xe654;</i>新增</button>
+					  </div>
+					</form>
+                    <!-- 表单 end -->
+
+                    <!-- 表格 start -->
+                   <table class="layui-table" lay-data="{url:'/system/menu/list',page:true, id:'layui-table'}" lay-filter="layui-table-filter">
+					  <thead>
+					    <tr>
+					      <th lay-data="{field:'index', width:70,templet:'#indexTpl'}">序号</th>
+					      <th lay-data="{field:'name'}">名称</th>
+					      <th lay-data="{field:'parentName'}">父级</th>
+					      <th lay-data="{field:'type',templet:'#typeTpl'}">类型</th>
+					      <th lay-data="{field:'url'}">URL</th>
+					      <th lay-data="{field:'level'}">层级</th>
+					      <th lay-data="{field:'status',templet:'#statusTpl'}">状态</th>
+					      <th lay-data="{field:'source',templet:'#sourceTpl'}">来源</th>
+					      <th lay-data="{fixed: 'right', width:210, align:'center', toolbar: '#operationBar'}">操作</th>
+					    </tr>
+					  </thead>
+					</table>
+					<script type="text/html" id="operationBar">
+						<a class="layui-btn layui-btn-xs" lay-event="detail?width=600&amp;height=380">查看</a>
+						{{#  if(d.type == 0 ){ }}
+							<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="grant?width=500&amp;height=300">授权</a>
+						{{#  } }}
+
+  						{{#  if(d.source == 0 ){ }}
+    						<a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="edit?width=800&amp;height=400">编辑</a>
+  							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  				 		{{#  } }}
+					</script>
+					<script type="text/html" id="indexTpl">
+                         {{d.LAY_TABLE_INDEX+1}}
+                    </script>
+                    <script type="text/html" id="typeTpl">
+				 		{{#  if(d.type == 0 ){ }}
+    						菜单
+						{{#  } else if(d.type == 1 ){ }}
+    						功能
+  						{{#  } else { }}
+    						目录
+  				 		{{#  } }}
+					</script>
+					<script type="text/html" id="statusTpl">
+				 		<input id="{{d.id}}" type="checkbox" name="status" value="{{d.status}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="statusSwitch" {{ d.status == 0 ? 'checked' : '' }} />
+					</script>
+					<script type="text/html" id="sourceTpl">
+				 		{{#  if(d.source == 0 ){ }}
+    						<a class="layui-btn  layui-btn-primary layui-btn-xs layui-btn-radius">管理员增加</a>
+  						{{#  } else { }}
+    						<a class="layui-btn  layui-btn-primary layui-btn-xs layui-btn-radius">系统初始化</a>
+  				 		{{#  } }}
+					</script>
+                    <!-- 表格 end -->
+                </div>
+                <!-- 自定义内容区域 end -->
+            </div>
+        </div>
+        <!-- 内容主体区域 end -->
+    </div>
+        <!-- 底部固定区域 start -->
+		<th:block th:include="/common/layout/footer" />
+		<!-- 底部固定区域 end -->
+</div>
+<!-- 共用JS start -->
+<th:block th:include="/common/layout/footJs" />
+<script src="/static/scripts/system/menu.js" charset="utf-8"></script>
+<!-- 共用JS end -->
+</body>
+</html>

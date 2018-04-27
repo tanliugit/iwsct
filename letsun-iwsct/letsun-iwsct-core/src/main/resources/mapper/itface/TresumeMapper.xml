@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.iwsct.itface.mapper.TresumeMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.iwsct.itface.domain.Tresume" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="resumeid" column="RESUMEID" jdbcType="BIGINT"/>
+	  	<result property="corpid" column="CORPID" jdbcType="BIGINT"/>
+	  	<result property="positionid" column="POSITIONID" jdbcType="BIGINT"/>
+	  	<result property="mobile" column="MOBILE" jdbcType="VARCHAR"/>
+	  	<result property="candidate" column="CANDIDATE" jdbcType="VARCHAR"/>
+	  	<result property="hail" column="HAIL" jdbcType="VARCHAR"/>
+	  	<result property="idnumber" column="IDNUMBER" jdbcType="VARCHAR"/>
+	  	<result property="sex" column="SEX" jdbcType="VARCHAR"/>
+	  	<result property="age" column="AGE" jdbcType="BIGINT"/>
+	  	<result property="height" column="HEIGHT" jdbcType="BIGINT"/>
+	  	<result property="education" column="EDUCATION" jdbcType="VARCHAR"/>
+	  	<result property="school" column="SCHOOL" jdbcType="VARCHAR"/>
+	  	<result property="specialty" column="SPECIALTY" jdbcType="VARCHAR"/>
+	  	<result property="content" column="CONTENT" jdbcType="LONGVARCHAR"/>
+	  	<result property="remarks" column="REMARKS" jdbcType="LONGVARCHAR"/>
+	  	<result property="schedule" column="SCHEDULE" jdbcType="INTEGER"/>
+	  	<result property="status" column="STATUS" jdbcType="INTEGER"/>
+	  	<result property="creator" column="CREATOR" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+	  	<result property="createcorp" column="CREATECORP" jdbcType="BIGINT"/>
+	  	<result property="areaid" column="AREAID" jdbcType="BIGINT"/>
+	  	<result property="englevel" column="ENGLEVEL" jdbcType="VARCHAR"/>
+	  	<result property="graduation" column="GRADUATION" jdbcType="VARCHAR"/>
+	  	<result property="currentcompany" column="CURRENTCOMPANY" jdbcType="VARCHAR"/>
+	  	<result property="currentjob" column="CURRENTJOB" jdbcType="VARCHAR"/>
+	  	<result property="worklonger" column="WORKLONGER" jdbcType="VARCHAR"/>
+	  	<result property="expectations" column="EXPECTATIONS" jdbcType="VARCHAR"/>
+	  	<result property="grade" column="GRADE" jdbcType="VARCHAR"/>
+	  	<result property="email" column="EMAIL" jdbcType="VARCHAR"/>
+	  	<result property="hractivityid" column="HRACTIVITYID" jdbcType="BIGINT"/>
+	  	<result property="fansid" column="FANSID" jdbcType="BIGINT"/>
+	  	<result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,resumeid,corpid,positionid,mobile,candidate,hail,idnumber,sex,age,height,education,school,specialty,content,remarks,schedule,status,creator,create_date,modifier,modify_date,createcorp,areaid,englevel,graduation,currentcompany,currentjob,worklonger,expectations,grade,email,hractivityid,fansid,deleted
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.resumeid,A.corpid,A.positionid,A.mobile,A.candidate,A.hail,A.idnumber,A.sex,A.age,A.height,A.education,A.school,A.specialty,A.content,A.remarks,A.schedule,A.status,A.creator,A.create_date,A.modifier,A.modify_date,A.createcorp,A.areaid,A.englevel,A.graduation,A.currentcompany,A.currentjob,A.worklonger,A.expectations,A.grade,A.email,A.hractivityid,A.fansid,A.deleted
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from t_resume A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',#{name},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

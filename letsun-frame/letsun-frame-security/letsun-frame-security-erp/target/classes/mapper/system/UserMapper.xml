@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.frame.security.system.mapper.UserMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.frame.security.system.domain.User" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="imageFace" column="image_face" jdbcType="VARCHAR"/>
+	  	<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+	  	<result property="name" column="name" jdbcType="VARCHAR"/>
+	  	<result property="email" column="email" jdbcType="VARCHAR"/>
+	  	<result property="sex" column="sex" jdbcType="BIT"/>
+	  	<result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+	  	<result property="phone" column="phone" jdbcType="VARCHAR"/>
+	  	<result property="qq" column="qq" jdbcType="VARCHAR"/>
+	  	<result property="weixin" column="weixin" jdbcType="VARCHAR"/>
+	  	<result property="alipay" column="alipay" jdbcType="VARCHAR"/>
+	  	<result property="address" column="address" jdbcType="VARCHAR"/>
+	  	<result property="type" column="type" jdbcType="BIT"/>
+	  	<result property="status" column="status" jdbcType="BIT"/>
+	  	<result property="remark" column="remark" jdbcType="VARCHAR"/>
+	  	<result property="deleted" column="deleted" jdbcType="BIT"/>
+	  	<result property="creator" column="creator" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+	  	<result property="imageFace" column="image_face" jdbcType="VARCHAR"/>
+	  	<result property="account" column="account" jdbcType="VARCHAR"/>
+	  	<result property="password" column="password" jdbcType="VARCHAR"/>
+    </resultMap>
+	
+
+	<resultMap id="ResultMapRole" extends="ResultMapBase" type="com.letsun.frame.security.system.domain.User" >
+     	<collection property="roles" column="id" select="com.letsun.frame.security.system.mapper.RoleMapper.findRolesByUserId"/>
+     </resultMap>
+     
+	<sql id="BaseColumn">
+		id,image_face,nickname,name,email,sex,mobile,phone,qq,weixin,alipay,address,type,status,remark,deleted,creator,create_date,modifier,modify_date
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		B.account,B.password,A.id,A.image_face,A.nickname,A.name,A.email,A.sex,A.mobile,A.phone,A.qq,A.weixin,A.alipay,A.address,A.type,A.status,A.remark,A.deleted,A.creator,A.create_date,A.modifier,A.modify_date
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from sys_user A
+	 	inner join	sys_user_login B  on A.id = B.user_id
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			A.deleted = 0
+			<if test="name !=null and name != ''">
+				AND A.name like CONCAT('%',#{name},'%')
+			</if>
+			<if test="account !=null and account != ''">
+				AND B.account like CONCAT('%',#{account},'%')
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 通过用户ID获取用户信息 -->  
+    <select id="findUserRoleById" resultMap="ResultMapRole">
+		select <include refid="BaseColumn"/>
+	 	from sys_user where id = #{id}
+    </select>
+    
+    <!-- 多表关联查询 -->  
+    <select id="findUserById" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from sys_user A
+	 	inner join	sys_user_login B  on A.id = B.user_id
+	 	where A.id = #{id}
+    </select>
+</mapper>

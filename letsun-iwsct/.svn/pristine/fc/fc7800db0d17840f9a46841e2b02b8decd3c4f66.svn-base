@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.iwsct.base.mapper.TfansMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.iwsct.base.domain.Tfans" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="fansid" column="FANSID" jdbcType="BIGINT"/>
+	  	<result property="name" column="NAME" jdbcType="VARCHAR"/>
+	  	<result property="password" column="PASSWORD" jdbcType="VARCHAR"/>
+	  	<result property="wxno" column="WXNO" jdbcType="VARCHAR"/>
+	  	<result property="score" column="SCORE" jdbcType="INTEGER"/>
+	  	<result property="shopid" column="SHOPID" jdbcType="INTEGER"/>
+	  	<result property="corpid" column="CORPID" jdbcType="BIGINT"/>
+	  	<result property="orgid" column="ORGID" jdbcType="BIGINT"/>
+	  	<result property="status" column="STATUS" jdbcType="INTEGER"/>
+	  	<result property="address" column="ADDRESS" jdbcType="VARCHAR"/>
+	  	<result property="telephone" column="TELEPHONE" jdbcType="VARCHAR"/>
+	  	<result property="age" column="AGE" jdbcType="INTEGER"/>
+	  	<result property="sex" column="SEX" jdbcType="INTEGER"/>
+	  	<result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+	  	<result property="contacts" column="CONTACTS" jdbcType="VARCHAR"/>
+	  	<result property="photourl" column="PHOTOURL" jdbcType="VARCHAR"/>
+	  	<result property="nickname" column="NICKNAME" jdbcType="VARCHAR"/>
+	  	<result property="creator" column="CREATOR" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="currentjob" column="CURRENTJOB" jdbcType="VARCHAR"/>
+	  	<result property="worklonger" column="WORKLONGER" jdbcType="VARCHAR"/>
+	  	<result property="email" column="EMAIL" jdbcType="VARCHAR"/>
+	  	<result property="helpscore" column="HELPSCORE" jdbcType="INTEGER"/>
+	  	<result property="helpnum" column="HELPNUM" jdbcType="INTEGER"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+	  	<result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,fansid,name,password,wxno,score,shopid,corpid,orgid,status,address,telephone,age,sex,remark,contacts,photourl,nickname,creator,create_date,currentjob,worklonger,email,helpscore,helpnum,modifier,modify_date,deleted
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.fansid,A.name,A.password,A.wxno,A.score,A.shopid,A.corpid,A.orgid,A.status,A.address,A.telephone,A.age,A.sex,A.remark,A.contacts,A.photourl,A.nickname,A.creator,A.create_date,A.currentjob,A.worklonger,A.email,A.helpscore,A.helpnum,A.modifier,A.modify_date,A.deleted
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from t_fans A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',#{name},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

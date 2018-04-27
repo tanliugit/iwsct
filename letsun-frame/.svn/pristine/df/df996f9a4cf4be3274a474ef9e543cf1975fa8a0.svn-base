@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>详情</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="addSave">
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.name}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">编码</label>
+			<div class="layui-input-block">
+				<input type="text" th:value="${obj.code}" class="layui-input" disabled="disabled"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+	   	 	<label class="layui-form-label">类型</label>
+	    	<div class="layui-input-block"  th:if="${obj.type==0}">
+		      	<input type="radio" name="type" value="0" title="通用功能" checked="checked">
+	    	</div>
+	    	<div class="layui-input-block"  th:if="${obj.type==1}">
+		      	<input type="radio" name="type" value="1" title="专属功能" checked="checked">
+	    	</div>
+	    </div>
+
+		<div class="layui-form-item">
+	   	 	<label class="layui-form-label">状态</label>
+	    	<div class="layui-input-block"  th:if="${obj.status==0}">
+		      	<input type="radio" name="status" value="0" title="启用" checked="checked">
+	    	</div>
+	    	<div class="layui-input-block"  th:if="${obj.status==1}">
+		      	<input type="radio" name="status" value="1" title="禁用" checked="checked">
+	    	</div>
+	    </div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

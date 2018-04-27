@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.letsun.iwsct.itface.mapper.TweblookUrlMapper" >
+    <resultMap id="ResultMapBase" type="com.letsun.iwsct.itface.domain.TweblookUrl" >
+	  	<id property="id" column="id" jdbcType="BIGINT" />
+	  	<result property="name" column="NAME" jdbcType="VARCHAR"/>
+	  	<result property="corpid" column="CORPID" jdbcType="BIGINT"/>
+	  	<result property="orgid" column="ORGID" jdbcType="BIGINT"/>
+	  	<result property="url" column="URL" jdbcType="VARCHAR"/>
+	  	<result property="visitpsum" column="VISITPSUM" jdbcType="BIGINT"/>
+	  	<result property="visitsum" column="VISITSUM" jdbcType="BIGINT"/>
+	  	<result property="status" column="STATUS" jdbcType="INTEGER"/>
+	  	<result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+	  	<result property="creator" column="CREATOR" jdbcType="VARCHAR"/>
+	  	<result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+	  	<result property="modifier" column="modifier" jdbcType="VARCHAR"/>
+	  	<result property="modifyDate" column="modify_date" jdbcType="TIMESTAMP"/>
+	  	<result property="sharesum" column="SHARESUM" jdbcType="BIGINT"/>
+	  	<result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+	
+	<sql id="BaseColumn">
+		id,name,corpid,orgid,url,visitpsum,visitsum,status,remark,creator,create_date,modifier,modify_date,sharesum,deleted
+	</sql>
+	
+	<sql id="BaseColumnComplex">
+		A.id,A.name,A.corpid,A.orgid,A.url,A.visitpsum,A.visitsum,A.status,A.remark,A.creator,A.create_date,A.modifier,A.modify_date,A.sharesum,A.deleted
+	</sql>
+	
+    <!-- 多表关联查询 -->  
+    <select id="selectComplex" resultMap="ResultMapBase">
+		select <include refid="BaseColumnComplex"/>
+	 	from t_weblook_url A
+	 	<include refid="sqlwhereSearch"/>
+    </select>
+
+	<!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			<if test="name !=null and name != ''">
+				<!--AND A.name like CONCAT('%',#{name},'%')  -->
+			</if>
+		</where>
+	</sql>
+</mapper>

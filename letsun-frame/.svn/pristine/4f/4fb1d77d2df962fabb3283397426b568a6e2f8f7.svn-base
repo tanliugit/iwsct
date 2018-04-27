@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.letsun.frame</groupId>
+		<artifactId>letsun-frame</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>letsun-frame-security</artifactId>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>letsun-frame-security-biaoji</module>
+		<module>letsun-frame-security-erp</module>
+	</modules>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.letsun.frame</groupId>
+			<artifactId>letsun-frame-core</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+		</dependency>
+	</dependencies>
+</project>

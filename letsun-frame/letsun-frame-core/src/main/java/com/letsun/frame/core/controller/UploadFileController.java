@@ -1,0 +1,58 @@
+package com.letsun.frame.core.controller;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.letsun.frame.core.common.utils.CosClient;
+
+/**
+ * @Desc 文件上传工具类  
+ * @author YY  
+ * @date 2018年4月12日
+ */
+@Controller
+@RequestMapping("/file")
+public class UploadFileController extends BaseController {
+
+	/**
+	 * @Desc 图片上传腾讯云服务器
+	 * @return
+	 * @author YY<2017年11月15日>
+	 * @throws IOException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public Object uplaodFileCos(@RequestParam("file") MultipartFile file) throws IOException {
+		Map<String, String> map = new HashMap<String, String>(8);
+		map.put("src", CosClient.fileUpload(file, "biaoji", "letsun-pingan"));
+		map.put("status", "200");
+		return map;
+	}
+
+	/**
+	 * @Desc 图片上传腾讯云服务器,返回layui需要的数据格式
+	 * @return
+	 * @author yangzq<2018年1月18日>
+	 * @throws IOException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/uploadLayui", method = RequestMethod.POST)
+	public Object uplaodFileCosToLayui(@RequestParam("file") MultipartFile file) throws IOException {
+		Map<String, Object> map = new HashMap<String, Object>(8);
+		map.put("code", "0");
+		map.put("msg", null);
+		Map<String, String> srcMap = new HashMap<String, String>(8);
+		srcMap.put("src", CosClient.fileUpload(file, "biaoji", "letsun-pingan"));
+		srcMap.put("title", null);
+		map.put("data", srcMap);
+		return map;
+	}
+}

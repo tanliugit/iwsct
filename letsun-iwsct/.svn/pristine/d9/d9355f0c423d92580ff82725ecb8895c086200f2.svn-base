@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="add">
+		<div class="layui-form-item">
+			<label class="layui-form-label">ID</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" class="layui-input" lay-verify="required" placeholder="请输入ID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" class="layui-input" lay-verify="required" placeholder="请输入名称"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">类型</label>
+			<div class="layui-input-block">
+				<input type="text" name="type" class="layui-input" lay-verify="required" placeholder="请输入类型"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">enckey</label>
+			<div class="layui-input-block">
+				<input type="text" name="enckey" class="layui-input" lay-verify="required" placeholder="请输入enckey"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">token</label>
+			<div class="layui-input-block">
+				<input type="text" name="token" class="layui-input" lay-verify="required" placeholder="请输入token"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">viewno</label>
+			<div class="layui-input-block">
+				<input type="text" name="viewno" class="layui-input" lay-verify="required" placeholder="请输入viewno"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">开始时间</label>
+			<div class="layui-input-block">
+				<input type="text" name="startdate" class="layui-input" lay-verify="required" placeholder="请输入开始时间"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">结束时间</label>
+			<div class="layui-input-block">
+				<input type="text" name="enddate" class="layui-input" lay-verify="required" placeholder="请输入结束时间"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">设置时间</label>
+			<div class="layui-input-block">
+				<input type="text" name="settledate" class="layui-input" lay-verify="required" placeholder="请输入设置时间"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">联系人</label>
+			<div class="layui-input-block">
+				<input type="text" name="linkman" class="layui-input" lay-verify="required" placeholder="请输入联系人"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">手机</label>
+			<div class="layui-input-block">
+				<input type="text" name="phone" class="layui-input" lay-verify="required" placeholder="请输入手机"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">邮箱</label>
+			<div class="layui-input-block">
+				<input type="text" name="email" class="layui-input" lay-verify="required" placeholder="请输入邮箱"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">联系方式</label>
+			<div class="layui-input-block">
+				<input type="text" name="contact" class="layui-input" lay-verify="required" placeholder="请输入联系方式"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">地址</label>
+			<div class="layui-input-block">
+				<input type="text" name="address" class="layui-input" lay-verify="required" placeholder="请输入地址"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+				<input type="text" name="status" class="layui-input" lay-verify="required" placeholder="请输入状态"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">备注</label>
+			<div class="layui-input-block">
+				<input type="text" name="remark" class="layui-input" lay-verify="required" placeholder="请输入备注"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">storeCorpId</label>
+			<div class="layui-input-block">
+				<input type="text" name="storecorpid" class="layui-input" lay-verify="required" placeholder="请输入storeCorpId"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">storeCorpKey</label>
+			<div class="layui-input-block">
+				<input type="text" name="storecorpkey" class="layui-input" lay-verify="required" placeholder="请输入storeCorpKey"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CREATEORG</label>
+			<div class="layui-input-block">
+				<input type="text" name="createorg" class="layui-input" lay-verify="required" placeholder="请输入CREATEORG"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">CREATECORP</label>
+			<div class="layui-input-block">
+				<input type="text" name="createcorp" class="layui-input" lay-verify="required" placeholder="请输入CREATECORP"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXICON</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxicon" class="layui-input" lay-verify="required" placeholder="请输入WXICON"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXNAME</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxname" class="layui-input" lay-verify="required" placeholder="请输入WXNAME"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXID</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxid" class="layui-input" lay-verify="required" placeholder="请输入WXID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXAPPID</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxappid" class="layui-input" lay-verify="required" placeholder="请输入WXAPPID"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">WXAPPSECRET</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxappsecret" class="layui-input" lay-verify="required" placeholder="请输入WXAPPSECRET"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信请求获取access_token</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxaccesstoken" class="layui-input" lay-verify="required" placeholder="请输入微信请求获取access_token"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">微信请求获取jsapi_ticket</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxjsapiticket" class="layui-input" lay-verify="required" placeholder="请输入微信请求获取jsapi_ticket"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">access_token对应的时间戳</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxtokenstamp" class="layui-input" lay-verify="required" placeholder="请输入access_token对应的时间戳"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">jsapi_ticket对应的时间戳</label>
+			<div class="layui-input-block">
+				<input type="text" name="wxticketstamp" class="layui-input" lay-verify="required" placeholder="请输入jsapi_ticket对应的时间戳"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

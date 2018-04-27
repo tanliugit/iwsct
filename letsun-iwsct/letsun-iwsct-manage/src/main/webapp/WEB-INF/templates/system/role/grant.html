@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+	<link rel="stylesheet" href="/static/plugins/zTree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+</head>
+<body>
+	<ul id="menuTree" class="ztree"></ul>
+	<th:block th:include="/common/layout/footJs" />
+	<script type="text/javascript" src="/static/plugins/zTree/js/jquery.ztree.core.min.js"></script>
+	<script type="text/javascript" src="/static/plugins/zTree/js/jquery.ztree.excheck.min.js"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		var setting = {
+			check: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+		var zTreeObj;
+		$(document).ready(function(){
+			zTreeObj = $.fn.zTree.init($("#menuTree"), setting,  [[${ztrees}]]);
+		});
+
+		//授权确认回调方法
+		function grantCallback(){
+			var roleId =  [[${roleId}]];
+			var checkedNodes = zTreeObj.getCheckedNodes();
+			var array = new Array();
+			for (var i = 0; i < checkedNodes.length; i++) {
+				var roleMenu = new Object();
+				roleMenu.roleId = roleId;
+				roleMenu.menuId = checkedNodes[i].id;
+				array.push(roleMenu);
+			}
+			//不给任何角色
+			if(array.length == 0){
+				var roleMenu = new Object();
+				roleMenu.roleId = roleId;
+				roleMenu.menuId = -1;
+				array.push(roleMenu);
+			}
+			if(array.length > 0){
+				$.ajax({
+					url : '/system/role/grant',
+					data : JSON.stringify(array),
+					type : "post",
+					contentType: "application/json; charset=utf-8",    
+		            dataType: "json",
+					success : function(_data) {
+						if (_data.type.toUpperCase() == "SUCCESS") {
+							parent.layer.closeAll();
+							parent.$.table.reload();
+							parent.layer.msg(_data.content, {
+								icon : 1,
+								time : 1000
+							});
+						}else{
+							parent.layer.msg(_data.content, {
+								icon : 0,
+								time : 1000
+							});
+						}
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						layer.msg('保存发生错误');
+					}
+				});
+			}
+		}
+	/*]]>*/
+	</script>
+</body>
+</html>

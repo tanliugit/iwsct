@@ -1,0 +1,52 @@
+package com.letsun.iwsct.itface.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+public class BaseController {
+
+	private static ThreadLocal<HttpServletRequest> requestLocal = new ThreadLocal<HttpServletRequest>();
+	private static ThreadLocal<HttpServletResponse> responseLocal = new ThreadLocal<HttpServletResponse>();
+	private static ThreadLocal<HttpSession> sessionLocal = new ThreadLocal<HttpSession>();
+
+	@ModelAttribute
+	public void setProperty(HttpSession session, HttpServletResponse response,
+			HttpServletRequest request) {
+		requestLocal.set(request);
+		responseLocal.set(response);
+		sessionLocal.set(session);
+	}
+
+	public HttpServletRequest getRequest() {
+		return requestLocal.get();
+	}
+
+	public HttpServletResponse getResponse() {
+		return responseLocal.get();
+	}
+
+	public HttpSession getSession() {
+		return sessionLocal.get();
+	}
+
+	/**
+	 * 获取访问IP
+	 **/
+	public String getIpAddr() {
+		HttpServletRequest request = getRequest();
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip.split(",")[0];
+	}
+}

@@ -1,0 +1,10 @@
+<script src="/static/scripts/lib/jquery-1.8.1.min.js" charset="utf-8"></script>
+<script src="/static/plugins/layui/layui.all.js" charset="utf-8"></script>
+<script src="/static/plugins/layui/layui.utils.js" charset="utf-8"></script>
+<script src="/static/plugins/layui/layui.verify.js" charset="utf-8"></script>
+<script src="/static/plugins/layui/layui.select.js" charset="utf-8"></script>
+<script src="/static/scripts/common/common.js" charset="utf-8"></script>
+<script src="/static/plugins/mCustomScrollbar/jquery.mCustomScrollbar.js"></script>
+<script src="/static/plugins/cityLinkage/cityData.js"></script>
+<script src="/static/plugins/cityLinkage/citySelectMultiple.js"></script>
+<script src="/static/plugins/cityLinkage/citySelect.js"></script>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>新增</title>
+	<th:block th:include="/common/layout/header" />
+</head>
+<body>
+	<form class="layui-form layui-form-pane" action="add">
+		<div class="layui-form-item">
+			<label class="layui-form-label">name</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">起始日期</label>
+			<div class="layui-input-block">
+				<input type="text" name="starttime" class="layui-input"  placeholder="请输入起始日期"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">终止日期</label>
+			<div class="layui-input-block">
+				<input type="text" name="endtime" class="layui-input"  placeholder="请输入终止日期"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">是否开启抽奖功能1：是；0：否</label>
+			<div class="layui-input-block">
+				<input type="text" name="isflag" class="layui-input"  placeholder="请输入是否开启抽奖功能1：是；0：否"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">抽奖启动密码</label>
+			<div class="layui-input-block">
+				<input type="text" name="lotterypassword" class="layui-input"  placeholder="请输入抽奖启动密码"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">status</label>
+			<div class="layui-input-block">
+				<input type="text" name="status" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">描述</label>
+			<div class="layui-input-block">
+				<input type="text" name="remark" class="layui-input"  placeholder="请输入描述"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">corpid</label>
+			<div class="layui-input-block">
+				<input type="text" name="corpid" class="layui-input" lay-verify="required" placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">orgid</label>
+			<div class="layui-input-block">
+				<input type="text" name="orgid" class="layui-input"  placeholder="请输入"/>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+			     <button class="layui-btn" lay-submit="" lay-filter="layui-form-submit-btn">提交</button>
+			     <button id="layui-form-cancel-btn" type="button" class="layui-btn layui-btn-primary">取消</button>
+			 </div>
+		</div>
+	</form>
+	<th:block th:include="/common/layout/footJs" />
+</body>
+</html>

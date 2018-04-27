@@ -1,0 +1,148 @@
+/*
+ *Project: security
+ ****************************************************************
+ * 版权所有@2018 立信创源  保留所有权利.
+ ***************************************************************/
+package com.letsun.frame.security.system.controller;
+
+import javax.validation.Valid;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.google.code.kaptcha.Constants;
+import com.letsun.frame.core.common.lang.annotation.OperationLogs;
+import com.letsun.frame.core.common.lang.enums.EnumType.BusinessType;
+import com.letsun.frame.core.domain.Message;
+import com.letsun.frame.security.common.controller.BaseAdminController;
+import com.letsun.frame.security.system.domain.UserLogin;
+import com.letsun.frame.security.system.service.UserLoginService;
+
+/**
+ *  
+ * @Author YY 
+ * @Date <2018年03月13日>
+ * @version 1.0
+ */
+@Controller
+public class UserLoginController extends BaseAdminController {
+	
+	@Autowired
+	private UserLoginService userLoginService;
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String toLogin(Model model) {
+		return "/login";
+	}
+	
+	@RequestMapping(value="/login",method=RequestMethod.POST)
+    @OperationLogs(businessType=BusinessType.LOGIN,businessName="manage用户登录")
+    public String login(@Valid UserLogin user,String validateCode,BindingResult bindingResult,ModelMap modelMap){
+        if(bindingResult.hasErrors()){
+            return "/login";
+        }
+        Object obj = getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+ 		String code = String.valueOf(obj != null ? obj : "");
+ 		if (StringUtils.isBlank(validateCode) || !validateCode.equalsIgnoreCase(code)) {
+ 			modelMap.addAttribute("message", "验证码错误");
+ 			 return "/login";
+ 		}
+        String username = user.getAccount();
+        UsernamePasswordToken token = new UsernamePasswordToken(username,DigestUtils.md5Hex(user.getPassword()));
+        //获取当前的Subject  
+        Subject currentUser = SecurityUtils.getSubject();  
+        try {  
+            //在调用了login方法后,SecurityManager会收到AuthenticationToken,并将其发送给已配置的Realm执行必须的认证检查  
+            //每个Realm都能在必要时对提交的AuthenticationTokens作出反应  
+            //所以这一步在调用login(token)方法时,它会走到MyRealm.doGetAuthenticationInfo()方法中,具体验证方式详见此方法  
+            logger.info("对用户[" + username + "]进行登录验证..验证开始");  
+            currentUser.login(token);  
+            logger.info("对用户[" + username + "]进行登录验证..验证通过");  
+        }catch(UnknownAccountException uae){  
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,未知账户");  
+            modelMap.addAttribute("message", "未知账户");  
+        }catch(IncorrectCredentialsException ice){  
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误的凭证");  
+             modelMap.addAttribute("message", "密码不正确");
+        }catch(LockedAccountException lae){  
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,账户已锁定");  
+            modelMap.addAttribute("message", "账户已锁定("+lae.getMessage()+")");  
+        }catch(ExcessiveAttemptsException eae){  
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过,错误次数过多");  
+             modelMap.addAttribute("message", "用户名或密码错误次数过多");  
+        }catch(AuthenticationException ae){  
+            //通过处理Shiro的运行时AuthenticationException就可以控制用户登录失败或密码错误时的情景  
+            logger.info("对用户[" + username + "]进行登录验证..验证未通过:"+ae.getMessage());  
+            ae.printStackTrace();
+            modelMap.addAttribute("message", "用户名或密码不正确");
+        }  
+        //验证是否登录成功  
+        if(currentUser.isAuthenticated()){  
+            logger.info("用户[" + username + "]登录认证通过");  
+            return "redirect:/index";
+        }
+        token.clear();
+		return "/login";
+    }
+    
+    @RequestMapping(value="/logout",method=RequestMethod.GET)
+    @OperationLogs(businessType=BusinessType.LOGOUT,businessName="manage用户退出登录")
+    public String logout(RedirectAttributes redirectAttributes ){ 
+        //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
+        SecurityUtils.getSubject().logout();  
+        redirectAttributes.addFlashAttribute("message", "您已安全退出");  
+        return "redirect:/login";
+    }
+	
+    /**
+	 * 修改密码
+	 * @return
+	 */
+	@RequestMapping(value = "password", method = RequestMethod.GET)
+	public String password() {
+		return "/password";
+	}
+
+	/**
+	 * 保存密码修改
+	 * 
+	 * @param oldPwd
+	 * @param newPwd
+	 * @param surePwd
+	 * @return
+	 */
+	@RequestMapping(value = "password", method = RequestMethod.POST)
+	@ResponseBody
+	public Message password(String oldPwd, String newPwd, String surePwd) {
+		if (StringUtils.isBlank(oldPwd) || StringUtils.isBlank(newPwd) || StringUtils.isBlank(surePwd)) {
+			return Message.error("参数不完整");
+		}
+
+		if (!StringUtils.equals(newPwd, surePwd)) {
+			return Message.error("两次密码输入不一致");
+		}
+
+		if (!StringUtils.equals(getLoginUser().getPassword(), DigestUtils.md5Hex(oldPwd))) {
+			return Message.error("原密码输入错误");
+		}
+		boolean result = userLoginService.updatePassword(getLoginUser().getId(), DigestUtils.md5Hex(newPwd));
+		return result ? Message.success("修改密码成功") : Message.error("修改密码失败");
+	}
+}

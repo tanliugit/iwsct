@@ -1,0 +1,113 @@
+.clearFix:before,
+.clearFix:after {
+  content: " ";
+  display: table;
+}
+.clearFix:after {
+  clear: both;
+}
+/* 颜色值 */
+/* 公共图片路径 */
+/* 商品栏目图片路径 */
+.cityInput {
+  position: relative;
+}
+.cityInput .layui-input {
+  cursor: pointer;
+}
+.cityInput .layui-icon {
+  line-height: 33px;
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 33px;
+  height: 33px;
+  text-align: center;
+  color: #ccc;
+  background: #fff;
+}
+.cityInput .lxcy-citySelect-wrapper {
+  position: absolute;
+  z-index: 99999;
+  top: 39px;
+  left: 0;
+  display: none;
+  width: 100%;
+  opacity: 0;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con {
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 300px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 0 10px -3px #999;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd {
+  font-size: 0;
+  padding: 8px 10px;
+  cursor: default;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd:before,
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd:after {
+  content: " ";
+  display: table;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd:after {
+  clear: both;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd:hover {
+  background: #f2f2f2;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd.active {
+  color: #fff;
+  background: #5fb878;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd.multiple-active .lxcy-icon {
+  border-color: #da251d;
+  background-color: #da251d;
+  color: #fff;
+  background-image: url("../../images/common/yes.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd .text {
+  font-size: 14px;
+  float: left;
+}
+
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd:first-child .text {
+  width:100%;
+  color:#999;
+} 
+
+@media only screen and (max-width: 1400px) {
+    .cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd .text{
+        width:80%;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd .text{
+        width:75%;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd .text{
+        width:65%;
+    }
+}
+
+.cityInput .lxcy-citySelect-wrapper .lxcy-citySelect-con dd .lxcy-icon {
+  display: block;
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin-top: 4px;
+  margin-right: 4px;
+  border-radius: 2px;
+  vertical-align: top;
+  border: 1px solid #ddd;
+}
